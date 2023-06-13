@@ -14,3 +14,49 @@ h1 {
     position: relative;
     font-size: 50px;
 }
+
+.opt {
+    justify-content: center;
+    display: flex;
+    position: relative;
+}
+
+.opt input {
+    height: 50px;
+    width: 300px;
+    color: #fff;
+    background-color: #333;
+    border: none;
+    border-radius: 5px;
+    padding-left: 15px;
+    box-sizing: border-box;
+    outline: none;
+    top: 300px;
+    position: relative;
+    margin-bottom: 25px;
+}
+
+.start {
+    height: 50px;
+    width: 300px;
+    border: none;
+    border-radius: 10px;
+    padding-left: 15px;
+    box-sizing: border-box;
+    outline: none;
+    top: 320px;
+    position: relative;
+    cursor: pointer;
+}
+.alin {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+
+}
+
+img {
+    height: 155px;
+    top: -130px;
+    position: relative;
+}
