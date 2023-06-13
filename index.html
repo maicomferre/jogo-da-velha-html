@@ -26,9 +26,21 @@
     </div>
 
     <div class="opt" id="opt2" style="display:none;">
-        <p>Aparece aqui o nome dos usuários identificando eles por id tipo <span id="username1">Manuel Luís Osório</span><br>
-        <h1>Aqui entra o jogo da velha</h1><br><hr>Pra voltar ao menu so colocar onClick="voltar_ao_menu" no botão
-        <canvas id="game"></canvas>
+        <table>
+            <tr>
+                <td><span id="username1"></span></td>
+                <td><span id="username2"></span></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <canvas id="game">Navegador Não compatível com canvas</canvas>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2"><button onClick="voltar_ao_menu()">Voltar Ao Menu</button></td>
+            </tr>
+        </table> 
+
     </div>
 </body>
 </html>

@@ -50,6 +50,9 @@ function comecar()
 	Player[1]['venceu'] = 0;
 	Player[1]['perdeu'] = 0;
 
+	$("#username1").text(player1)
+	$("#username2").text(player2);
+
 	$('#opt1').toggle('slow');
 	$('#opt2').toggle('slow');
 }
@@ -92,7 +95,5 @@ function write_game(context)
 
 
 	cx.stroke();
-
-
 
 }
