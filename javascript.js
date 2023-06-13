@@ -1,11 +1,18 @@
 var Player = [0,1];
 
-/*
-$(document).ready(function(){
-    
 
+//Config
+canvas = undefined;
+/*var canvas_velha = [];
+var canvas_posicao [];
+var canvas_X = ;
+var canvas_O = ;*/
+
+$(document).ready(function(){
+	canvas = load_canvas();
+	write_game(canvas);
 });
-*/
+
 function comecar()
 {
 	var player1 = document.getElementById('player1').value;
@@ -51,4 +58,41 @@ function voltar_ao_menu()
 {
 	$('#opt1').toggle('slow');
 	$('#opt2').toggle('slow');	
+}
+
+function load_canvas()
+{
+	var canvas = document.getElementById('game');
+
+	if(canvas.getContext == false)
+	{
+		alert("Falha ao iniciar o canvas! Navegador obseleto.");
+		return undefined;
+	}
+	var ctx = canvas.getContext('2d');
+
+	return {ctx,canvas};
+}
+function write_game(context)
+{
+	let cx = context.ctx;
+
+	cx.lineWidth = 2;
+	cx.beginPath();
+	for (let y = 40; y < 120; y += 40) 
+	{
+		cx.moveTo(30, y);
+		cx.lineTo(300, y);
+	}
+	cx.moveTo(220, 10);
+	cx.lineTo(220, 120);
+
+	cx.moveTo(110, 10);
+	cx.lineTo(110, 120);
+
+
+	cx.stroke();
+
+
+
 }

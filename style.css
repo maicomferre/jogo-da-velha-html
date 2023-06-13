@@ -31,9 +31,13 @@ h1 {
     padding-left: 15px;
     box-sizing: border-box;
     outline: none;
-    top: 300px;
     position: relative;
     margin-bottom: 25px;
+}
+
+canvas{
+    width:400px;
+    height:400px;
 }
 
 .start {
@@ -44,19 +48,12 @@ h1 {
     padding-left: 15px;
     box-sizing: border-box;
     outline: none;
-    top: 320px;
     position: relative;
     cursor: pointer;
 }
-.alin {
-    justify-content: center;
-    align-items: center;
-    display: flex;
-
-}
 
 img {
-    height: 155px;
-    top: -130px;
     position: relative;
+    height: 200px;
+    margin-bottom: 45px;
 }
