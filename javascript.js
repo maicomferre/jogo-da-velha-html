@@ -9,14 +9,26 @@ var canvas_velha = [
 	[70,100],[160,100],[250,100],
 ];
 
-console.log(canvas_velha);
-/*var canvas_posicao [];
-var canvas_X = ;
-var canvas_O = ;*/
+var canvas_posicao_click = [
+	[42,26,142,100],// 0x0
+	[152,25,290,99],// 0x1
+	[298,25,398,99],// 0x2
+	[41,110,142,207],//1x0
+	[151,109,289,209],//1x1
+	[297,110,398,206],//1x2
+	[40,221,140,308],//2x0
+	[150,217,285,322],//2x1
+	[297,217,391,320],//2x2
+
+];
 
 $(document).ready(function(){
 	canvas = load_canvas();
 	write_game(canvas);
+
+	$('#game').on('mousedown', function(e) {
+    	getCursorPosition(canvas, e);
+	});
 });
 
 function comecar()
@@ -101,27 +113,43 @@ function write_game(context)
 
 
 	cx.stroke();
-
-	draw_boll(context,canvas_velha[0][0],canvas_velha[0][1]);
-	draw_boll(context,canvas_velha[1][0],canvas_velha[1][1]);
-	draw_boll(context,canvas_velha[2][0],canvas_velha[2][1]);
-
-
-	draw_boll(context,canvas_velha[3][0],canvas_velha[3][1]);
-	draw_boll(context,canvas_velha[4][0],canvas_velha[4][1]);
-	draw_boll(context,canvas_velha[5][0],canvas_velha[5][1]);
-
-
-	draw_boll(context,canvas_velha[6][0],canvas_velha[6][1]);
-	draw_boll(context,canvas_velha[7][0],canvas_velha[7][1]);
-	draw_boll(context,canvas_velha[8][0],canvas_velha[8][1]);		
+	
 }
 
 
-function draw_boll(cx,x,y)
+function draw_option(type,cx,x,y)
 {
-	cx = cx.ctx;
 	cx.beginPath();
-	cx.arc(x, y, 10, 0, 2*Math.PI);
+	if(type)
+	{
+		cx.arc(x, y, 10, 0, 2*Math.PI);
+	}
+	else
+	{
+		cx.font = '30px arial';
+		cx.fillText("X",x-5,y+10);
+	}
 	cx.stroke();
+}
+
+function getCursorPosition(canvas, event) {
+
+    console.log("x: " + event.offsetX + " y: " + event.offsetY);
+    checkClick(canvas.ctx,event.offsetX,event.offsetY);
+}
+
+
+function checkClick(canvas,x,y)
+{
+	console.log("Mouse: X="+x+"; Y="+y);
+	for(let z=0; z<canvas_posicao_click.length; z++)
+	{
+		let xin = canvas_posicao_click[z][0];
+		let yin = canvas_posicao_click[z][1];
+		let xout = canvas_posicao_click[z][2];
+		let yout = canvas_posicao_click[z][3];
+
+		if (x>xin && y>yin && x < xout && y < yout)
+		draw_option(true,canvas,canvas_velha[z][0],canvas_velha[z][1]);
+	}
 }
