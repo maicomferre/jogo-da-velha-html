@@ -1,8 +1,14 @@
 var Player = [0,1];
 
 
+var jogador_atual = Boolean(Math.random() < 0.5);
+
 //Config
-canvas = undefined;
+var canvas = undefined;
+var playerinterval = null;
+var player_color = "#EEAABB";
+var interval_control = false;
+
 var canvas_velha = [
 	[70,25],[160,25],[250,25],
 	[70,60],[160,60],[250,60],
@@ -68,8 +74,8 @@ function comecar()
 	Player[1]['venceu'] = 0;
 	Player[1]['perdeu'] = 0;
 
-	$("#username1").text(player1)
-	$("#username2").text(player2);
+	$("#username0").text(player1)
+	$("#username1").text(player2);
 
 	$('#opt1').toggle('slow');
 	$('#opt2').toggle('slow');
@@ -113,9 +119,32 @@ function write_game(context)
 
 
 	cx.stroke();
-	
+
+	init_playercolor()
 }
 
+function init_playercolor()
+{
+	if(playerinterval != null){
+		clearInterval(playerinterval);
+		let tmp = !jogador_atual ? "1" : "0";
+		$('#username'+tmp).css("background-color",'transparent');
+	}
+
+
+	playerinterval = setInterval(function(){
+		let tmp = jogador_atual ? "1" : "0";
+
+		let usercolor = "#FFFFFF";
+		
+		if(interval_control)
+			usercolor = player_color;
+
+		interval_control = !interval_control;
+
+		$('#username'+tmp).css("background-color",usercolor);
+	},400);	
+}
 
 function draw_option(type,cx,x,y)
 {
@@ -150,6 +179,10 @@ function checkClick(canvas,x,y)
 		let yout = canvas_posicao_click[z][3];
 
 		if (x>xin && y>yin && x < xout && y < yout)
-		draw_option(true,canvas,canvas_velha[z][0],canvas_velha[z][1]);
+		{
+			draw_option(jogador_atual,canvas,canvas_velha[z][0],canvas_velha[z][1]);
+		}
 	}
+	jogador_atual = !jogador_atual;
+	init_playercolor();
 }
