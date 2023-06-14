@@ -3,8 +3,14 @@ var Player = [0,1];
 
 //Config
 canvas = undefined;
-/*var canvas_velha = [];
-var canvas_posicao [];
+var canvas_velha = [
+	[70,25],[160,25],[250,25],
+	[70,60],[160,60],[250,60],
+	[70,100],[160,100],[250,100],
+];
+
+console.log(canvas_velha);
+/*var canvas_posicao [];
 var canvas_X = ;
 var canvas_O = ;*/
 
@@ -96,4 +102,26 @@ function write_game(context)
 
 	cx.stroke();
 
+	draw_boll(context,canvas_velha[0][0],canvas_velha[0][1]);
+	draw_boll(context,canvas_velha[1][0],canvas_velha[1][1]);
+	draw_boll(context,canvas_velha[2][0],canvas_velha[2][1]);
+
+
+	draw_boll(context,canvas_velha[3][0],canvas_velha[3][1]);
+	draw_boll(context,canvas_velha[4][0],canvas_velha[4][1]);
+	draw_boll(context,canvas_velha[5][0],canvas_velha[5][1]);
+
+
+	draw_boll(context,canvas_velha[6][0],canvas_velha[6][1]);
+	draw_boll(context,canvas_velha[7][0],canvas_velha[7][1]);
+	draw_boll(context,canvas_velha[8][0],canvas_velha[8][1]);		
+}
+
+
+function draw_boll(cx,x,y)
+{
+	cx = cx.ctx;
+	cx.beginPath();
+	cx.arc(x, y, 10, 0, 2*Math.PI);
+	cx.stroke();
 }
