@@ -67,5 +67,15 @@ tr:first-child td{
     text-align:center;
     font-size:16px;
     font-weight:bold;
+    border-radius:8px;
+    box-shadow:4px 4px 8px #00AA00;
     
+}
+#errormessage{
+    position:absolute;
+    text-align: center;
+    font-size:16px;
+    font-weight: bolder;
+    color:#AA0000;
+    bottom:-50px;
 }

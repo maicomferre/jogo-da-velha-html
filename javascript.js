@@ -1,6 +1,19 @@
 var Player = [0,1];
 
 
+
+//Efeitos Sonoros
+var path = "files/sound/";
+;
+var sound_path = {
+	'error':      {file:'wrong-buzzer-6268.mp3'},
+	'game_click': {file:'click-for-game-menu-131903.mp3'},
+	'back_sound': {file:'merx-market-song-33936.mp3'},
+}
+
+var sound_list = ['error','game_click','back_sound'];
+
+
 var jogador_atual = Boolean(Math.random() < 0.5);
 
 //Config
@@ -29,6 +42,7 @@ var canvas_posicao_click = [
 ];
 
 $(document).ready(function(){
+	sound_load();
 	canvas = load_canvas();
 	write_game(canvas);
 
@@ -44,23 +58,23 @@ function comecar()
 
 	if(player1.length < 3)
 	{
-		alert("Por favor, preencha pelo menos 3 caracteres no primeiro usuario.");
+		showerror("Por favor, preencha pelo menos 3 caracteres no primeiro usuario.");
 		return false;
 	}
 	if(player1.length < 3)
 	{
-		alert("Por favor, preencha pelo menos 3 caracteres no segundo usuario.");
+		showerror("Por favor, preencha pelo menos 3 caracteres no segundo usuario.");
 		return false;
 	}	
 
 	if(player1.length > 15)
 	{
-		alert("Por favor, preencha no máximo 15 caracteres no primeiro usuario.");
+		showerror("Por favor, preencha no máximo 15 caracteres no primeiro usuario.");
 		return false;
 	}
 	if(player1.length > 15)
 	{
-		alert("Por favor, preencha no máximo 15 caracteres no segundo usuario.");
+		showerror("Por favor, preencha no máximo 15 caracteres no segundo usuario.");
 		return false;
 	}		
 
@@ -93,7 +107,7 @@ function load_canvas()
 
 	if(canvas.getContext == false)
 	{
-		alert("Falha ao iniciar o canvas! Navegador obseleto.");
+		showerror("Falha ao iniciar o canvas! Navegador obseleto.");
 		return undefined;
 	}
 	var ctx = canvas.getContext('2d');
@@ -170,6 +184,8 @@ function getCursorPosition(canvas, event) {
 
 function checkClick(canvas,x,y)
 {
+	sound_path['game_click']['audio'].currentTime = 0;
+	sound_path['game_click']['audio'].play();	
 	console.log("Mouse: X="+x+"; Y="+y);
 	for(let z=0; z<canvas_posicao_click.length; z++)
 	{
@@ -185,4 +201,53 @@ function checkClick(canvas,x,y)
 	}
 	jogador_atual = !jogador_atual;
 	init_playercolor();
+}
+
+function sound_load()
+{
+	for(let x=0; x<sound_list.length; x++)
+	{
+		if(sound_path[sound_list[x]]['file'] == undefined)
+		{
+			console.log("error sound_load(): sound_path[sound_list["+x+"]]['file'] is undefined");
+			//continue;
+		}
+		sound_path[sound_list[x]]['loaded'] = false;
+
+		if(new window.Audio() === undefined)
+		{
+			console.log("Error window.Audio(): Indefinido");
+			return false;
+		}
+
+		sound_path[sound_list[x]]['audio'] = new Audio();
+
+
+		sound_path[sound_list[x]]['audio'].onerror = function()
+		{
+			console.log("error sound_load(): não foi possivel carregar o audio; ação: ignorando.");
+			//continue;
+		}
+
+
+		sound_path[sound_list[x]]['audio'].onload = function()
+		{
+			sound_path[sound_list[x]]['loaded'] = false;
+		}
+
+		sound_path[sound_list[x]]['audio'].src = path + sound_path[sound_list[x]]['file'];
+	
+	}
+
+}
+
+function showerror(msg,time=4000)
+{
+	sound_path['error']['audio'].play();	
+	$("#errormessage").html(msg);
+	$("#errormessage").toggle('slow');
+
+	setTimeout(function(){
+	$("#errormessage").toggle('slow');		
+	},time);
 }
