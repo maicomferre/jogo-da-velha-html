@@ -232,7 +232,7 @@ function sound_load()
 
 		sound_path[sound_list[x]]['audio'].onload = function()
 		{
-			sound_path[sound_list[x]]['loaded'] = false;
+			sound_path[sound_list[x]]['loaded'] = true;
 		}
 
 		sound_path[sound_list[x]]['audio'].src = path + sound_path[sound_list[x]]['file'];
