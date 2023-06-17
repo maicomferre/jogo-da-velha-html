@@ -21,6 +21,8 @@ var canvas = undefined;
 var playerinterval = null;
 var player_color = "#EEAABB";
 var interval_control = false;
+var velha_selecionado = [];
+
 
 var canvas_velha = [
 	[70,25],[160,25],[250,25],
@@ -61,7 +63,7 @@ function comecar()
 		showerror("Por favor, preencha pelo menos 3 caracteres no primeiro usuario.");
 		return false;
 	}
-	if(player1.length < 3)
+	if(player2.length < 3)
 	{
 		showerror("Por favor, preencha pelo menos 3 caracteres no segundo usuario.");
 		return false;
@@ -72,7 +74,7 @@ function comecar()
 		showerror("Por favor, preencha no máximo 15 caracteres no primeiro usuario.");
 		return false;
 	}
-	if(player1.length > 15)
+	if(player2.length > 15)
 	{
 		showerror("Por favor, preencha no máximo 15 caracteres no segundo usuario.");
 		return false;
@@ -175,6 +177,7 @@ function draw_option(type,cx,x,y)
 	cx.stroke();
 }
 
+
 function getCursorPosition(canvas, event) {
 
     console.log("x: " + event.offsetX + " y: " + event.offsetY);
@@ -184,9 +187,6 @@ function getCursorPosition(canvas, event) {
 
 function checkClick(canvas,x,y)
 {
-	sound_path['game_click']['audio'].currentTime = 0;
-	sound_path['game_click']['audio'].play();	
-	console.log("Mouse: X="+x+"; Y="+y);
 	for(let z=0; z<canvas_posicao_click.length; z++)
 	{
 		let xin = canvas_posicao_click[z][0];
@@ -196,11 +196,19 @@ function checkClick(canvas,x,y)
 
 		if (x>xin && y>yin && x < xout && y < yout)
 		{
-			draw_option(jogador_atual,canvas,canvas_velha[z][0],canvas_velha[z][1]);
+			if(!velha_selecionado[z])
+			{
+				sound_path['game_click']['audio'].currentTime = 0;
+				sound_path['game_click']['audio'].play();				
+				
+				draw_option(jogador_atual,canvas,canvas_velha[z][0],canvas_velha[z][1]);
+				velha_selecionado[z] = true;
+
+				jogador_atual = !jogador_atual;
+				init_playercolor();				
+			}
 		}
 	}
-	jogador_atual = !jogador_atual;
-	init_playercolor();
 }
 
 function sound_load()
@@ -210,7 +218,6 @@ function sound_load()
 		if(sound_path[sound_list[x]]['file'] == undefined)
 		{
 			console.log("error sound_load(): sound_path[sound_list["+x+"]]['file'] is undefined");
-			//continue;
 		}
 		sound_path[sound_list[x]]['loaded'] = false;
 
@@ -226,7 +233,6 @@ function sound_load()
 		sound_path[sound_list[x]]['audio'].onerror = function()
 		{
 			console.log("error sound_load(): não foi possivel carregar o audio; ação: ignorando.");
-			//continue;
 		}
 
 
@@ -236,18 +242,25 @@ function sound_load()
 		}
 
 		sound_path[sound_list[x]]['audio'].src = path + sound_path[sound_list[x]]['file'];
+		//sound_path[sound_list[x]]['audio'].play();		
+		sound_path[sound_list[x]]['audio'].currentTime = 0;
 	
 	}
 
 }
 
+var antidouble = false;
 function showerror(msg,time=4000)
 {
+	if(antidouble)return;
+
 	sound_path['error']['audio'].play();	
 	$("#errormessage").html(msg);
 	$("#errormessage").toggle('slow');
+	antidouble = true;
 
 	setTimeout(function(){
-	$("#errormessage").toggle('slow');		
+		$("#errormessage").toggle('slow');	
+		antidouble=false;	
 	},time);
 }
