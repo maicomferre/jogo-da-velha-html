@@ -96,6 +96,12 @@ function comecar()
 
 	$('#opt1').toggle('slow');
 	$('#opt2').toggle('slow');
+
+	setTimeout(function(){
+
+		sound_path['back_sound']['audio'].play();
+
+	},3000);
 }
 
 function voltar_ao_menu()
