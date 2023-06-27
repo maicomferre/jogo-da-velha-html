@@ -57,3 +57,15 @@ function sound_load()
 	
 	}
 }
+
+function resetar()
+{
+	canvas_context.ctx.clearRect(0, 0, canvas_context.canvas.width, canvas_context.canvas.height);
+
+	for(let z=0; z<canvas_posicao_click.length; z++)
+		velha_selecionado[z] = false;
+	
+	write_game(canvas_context);
+}
+
+

@@ -12,7 +12,7 @@ var sound_path = {
 }
 
 var sound_list = ['error','game_click','back_sound'];
-
+canvas_context = undefined;
 
 var jogador_atual = Boolean(Math.random() < 0.5);
 
@@ -47,6 +47,7 @@ $(document).ready(function(){
 	sound_load();
 	canvas = load_canvas();
 	write_game(canvas);
+	canvas_context = canvas;
 
 	$('#game').on('mousedown', function(e) {
     	getCursorPosition(canvas, e);
