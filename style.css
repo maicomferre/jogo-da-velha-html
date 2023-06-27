@@ -52,12 +52,23 @@ canvas{
     cursor: pointer;
 }
 
-img {
+#imgvelha {
     position: relative;
     height: 200px;
     margin-bottom: 45px;
     margin-left: 50px;
 }
+#imgsom img{
+    position: fixed;
+    right:75px;
+    top:75px;
+    width:15px;
+    height:15px;
+}
+#imgsom {
+    padding:20px;
+}
+
 table{
     position:relative;
     top:50px;
