@@ -4,7 +4,6 @@ var Player = [0,1];
 
 //Efeitos Sonoros
 var path = "files/sound/";
-var estadosom = true;
 ;
 var sound_path = {
 	'error':      {file:'wrong-buzzer-6268.mp3'},
@@ -13,14 +12,6 @@ var sound_path = {
 }
 
 var sound_list = ['error','game_click','back_sound'];
-
-var images = {
-	'soundon':  { file: 'files/sondon.png' },
-	'soundoff': { file: 'files/sondoff.png'},
-};
-
-
-
 canvas_context = undefined;
 
 var jogador_atual = Boolean(Math.random() < 0.5);
@@ -54,7 +45,6 @@ var canvas_posicao_click = [
 
 $(document).ready(function(){
 	sound_load();
-	image_load();
 	canvas = load_canvas();
 	write_game(canvas);
 	canvas_context = canvas;
@@ -62,10 +52,6 @@ $(document).ready(function(){
 	$('#game').on('mousedown', function(e) {
     	getCursorPosition(canvas, e);
 	});
-
-	$('#imgsom').on('click', function(){ alternarsom() });
-
-
 });
 
 function comecar()
@@ -198,18 +184,6 @@ function draw_option(type,cx,x,y)
 	cx.stroke();
 }
 
-function alternarsom()
-{
-	estadosom = !estadosom;
-
-	let s = undefined;
-	s = (estadosom ? (images['soundon']) : (images['soundoff']));
-	$("#imgsom").html();
-	$("#imgsom").html(s['img']);
-
-	document.getElementById("imgsom").appendChild(s['img']);
-
-}
 
 function getCursorPosition(canvas, event) {
     checkClick(canvas.ctx,event.offsetX,event.offsetY);

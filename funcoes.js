@@ -46,6 +46,7 @@ function sound_load()
 			console.log("error sound_load(): não foi possivel carregar o audio; ação: ignorando.");
 		}
 
+
 		sound_path[sound_list[x]]['audio'].onload = function()
 		{
 			sound_path[sound_list[x]]['loaded'] = true;
@@ -63,32 +64,8 @@ function resetar()
 
 	for(let z=0; z<canvas_posicao_click.length; z++)
 		velha_selecionado[z] = false;
-
+	
 	write_game(canvas_context);
 }
 
 
-function image_load()
-{
-	images['soundon']['img'] = new Image();
-
-	images['soundon']['img'].onerror = function()
-	{
-		console.log("error image_load(): não foi possível carregar imagem; ação: ignorar");
-	}
-
-	images['soundon']['img'].src = images['soundon']['file'];
-
-	document.getElementById("imgsom").appendChild(images['soundon']['img']);
-
-	images['soundoff']['img'] = new Image();
-
-	images['soundoff']['img'].onerror = function()
-	{
-		console.log("error image_load(): não foi possível carregar imagem; ação: ignorar");
-	}
-
-	images['soundoff']['img'].src = images['soundoff']['file'];
-
-
-}
