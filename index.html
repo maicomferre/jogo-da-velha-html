@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -8,16 +9,19 @@
     <script type="text/javascript" src="funcoes.js"></script>
     <script type="text/javascript" src="javascript.js"></script>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <title>Jogo da Velha</title>
 </head>
 <body>
-    <h1>JOGO DA VELHA</h1>
+    <h1>JOGO DA VELHA <div  id="imgsom"></div></h1>
 
     <div class="opt" id="opt1">
          <div>
             <p id="errormessage" style="display: none;"></p>
             <br><br>
-            <img src="velha.png" alt="velha"><br>
+            <img id="imgvelha" src="velha.png" alt="velha"><br>
 
             <input type="text" id="player1" placeholder="Jogador N°1"><br>
 
