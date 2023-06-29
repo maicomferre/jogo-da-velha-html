@@ -246,3 +246,23 @@ function verificar()
 {
 	
 }
+
+function vencedor_pagina()
+{
+	$('#opt3').show('slow');
+	$('#opt2').hide('fast');
+	$('#opt1').hide('fast');
+
+	$('#playerwin').html(Player[parseInt(jogador_atual)]['nome']);
+	$('#playerlost').html(Player[parseInt(!jogador_atual)]['nome']);
+
+	$('#player1score').html(Player[0]['score'] );
+	$('#player1win').html(Player[0]['venceu'] );
+	$('#player1lost').html(Player[0]['perdeu'] );
+	$('#player1name').html(Player[0]['nome'] );
+
+	$('#player2score').html(Player[1]['score'] );
+	$('#player2win').html(Player[1]['venceu'] );
+	$('#player2lost').html(Player[1]['perdeu'] );
+	$('#player2name').html(Player[1]['nome'] );
+}
