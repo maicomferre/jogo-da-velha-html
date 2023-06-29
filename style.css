@@ -2,10 +2,11 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Press Start 2P', cursive;
 }
 
 body {
-    background: green;
+    background: #696969;
 }
 
 h1 {
@@ -41,23 +42,105 @@ canvas{
 }
 
 .start {
-    height: 50px;
-    width: 300px;
+    height: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .start {
+    min-width: 300px;
+    min-height: 60px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 22px;
+    text-transform: uppercase;
+    letter-spacing: 1.3px;
+    font-weight: 700;
+    color: white;
+    background: #2F4F4F;
+    background: linear-gradient(90deg, rgba(47,79,79,1) 0%, rgb(60, 122, 116) 100%);
     border: none;
-    border-radius: 10px;
-    padding-left: 15px;
-    box-sizing: border-box;
+    border-radius: 1000px;
+    box-shadow: 12px 12px 24px rgba(79,209,197,.64);
+    transition: all 0.3s ease-in-out 0s;
+    cursor: pointer;
     outline: none;
     position: relative;
-    cursor: pointer;
-}
+    padding: 10px;
+    }
+  
+    .start::before {
+    content: '';
+    border-radius: 1000px;
+    min-width: calc(300px + 12px);
+    min-height: calc(60px + 12px);
+    border: 6px solid #2F4F4F;
+    box-shadow: 0 0 60px rgba(47,79,79,.64);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: all .3s ease-in-out 0s;
+  }
+  
+  .start:hover, .start:focus {
+    color: #313133;
+    transform: translateY(-6px);
+  }
+  
+  .start:hover::before, button:focus::before {
+    opacity: 1;
+  }
+  
+  .start::after {
+    content: '';
+    width: 30px; height: 30px;
+    border-radius: 100%;
+    border: 6px solid #2F4F4F;
+    position: absolute;
+    z-index: -1;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: ring 1.5s infinite;
+  }
+  
+  .start:hover::after, .start:focus::after {
+    animation: none;
+    display: none;
+  }
+  
+  @keyframes ring {
+    0% {
+      width: 30px;
+      height: 30px;
+      opacity: 1;
+    }
+    100% {
+      width: 300px;
+      height: 300px;
+      opacity: 0;
+    }
+  }
 
-img {
+#imgvelha {
     position: relative;
     height: 200px;
     margin-bottom: 45px;
     margin-left: 50px;
 }
+#imgsom img{
+    position: fixed;
+    right:75px;
+    top:75px;
+    width:15px;
+    height:15px;
+}
+#imgsom {
+    padding:20px;
+}
+
 table{
     position:relative;
     top:50px;
