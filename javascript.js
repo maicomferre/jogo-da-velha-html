@@ -81,11 +81,13 @@ function comecar()
 		return false;
 	}		
 
+	Player[0] = {};
 	Player[0]['nome'] = player1;
 	Player[0]['score'] = 0;
 	Player[0]['venceu'] = 0;
 	Player[0]['perdeu'] = 0;
 
+	Player[1] = {};
 	Player[1]['nome'] = player2;
 	Player[1]['score'] = 0;
 	Player[1]['venceu'] = 0;
@@ -227,8 +229,9 @@ function vencedor_pagina()
 	$('#opt2').hide('fast');
 	$('#opt1').hide('fast');
 
-	$('#playerwin').html(Player[parseInt(jogador_atual)]['nome']);
-	$('#playerlost').html(Player[parseInt(!jogador_atual)]['nome']);
+
+	$('#playerwin').html(Player[((jogador_atual) ? 1 : 0)]['nome']);
+	$('#playerlost').html(Player[(jogador_atual) ? 0 : 1]['nome']);
 
 	$('#player1score').html(Player[0]['score'] );
 	$('#player1win').html(Player[0]['venceu'] );
