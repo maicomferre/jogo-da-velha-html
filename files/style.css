@@ -143,16 +143,18 @@ canvas{
 
 table{
     position:relative;
-    top:50px;
+    top:80px;
     left: 200px;
+    
 }
 tr:first-child td{
-    border:1px solid #000;
+   height: 50px;
+    border:5px solid #1aafa3d8;
     text-align:center;
     font-size:16px;
     font-weight:bold;
-    border-radius:8px;
-    box-shadow:4px 4px 8px #00AA00;
+    border-radius:10px;
+    box-shadow:4px 4px 8px #15468f;
     
 }
 #errormessage{
