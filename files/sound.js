@@ -1,26 +1,3 @@
-/*
-	Funções Secundárias. 
-
-*/
-
-var antidouble = false;
-function showerror(msg,time=4000)
-{
-	if(antidouble)return;
-
-	sound_path['error']['audio'].play();	
-	$("#errormessage").html(msg);
-	$("#errormessage").toggle('slow');
-	antidouble = true;
-
-	setTimeout(function(){
-		$("#errormessage").toggle('slow');	
-		antidouble=false;
-		sound_path['error']['audio'].currentTime = 0;
-	},time);
-}
-
-
 
 function sound_load()
 {
@@ -58,14 +35,44 @@ function sound_load()
 	}
 }
 
-function resetar()
+function som(sound, type)
 {
-	canvas_context.ctx.clearRect(0, 0, canvas_context.canvas.width, canvas_context.canvas.height);
-
-	for(let z=0; z<canvas_posicao_click.length; z++)
-		velha_selecionado[z] = false;
+	if(sound_path[sound] === undefined)
+	{
+		console.log('som('+sound+','+type+'): sound indefinido; Ação: cancelar.');
+		return false;
+	}
 	
-	write_game(canvas_context);
+	if(type != 'pausar' && type != 'iniciar' && type != 'cancelar' && type != 'reiniciar')
+	{
+		console.log('som('+sound+','+type+'): type inválido; Ação: cancelar.');
+		return false;
+	}
+	
+	switch(type)
+	{
+		case 'pausar':
+			sound_path[sound]['audio'].pause();
+			
+			break;
+		case 'iniciar':
+			sound_path[sound]['audio'].play();
+			break;
+		case 'cancelar':
+			sound_path[sound]['audio'].pause();
+			sound_path[sound]['audio'].currentTime = 0;
+			break;
+		case 'reiniciar':
+			sound_path[sound]['audio'].currentTime = 0;
+			sound_path[sound]['audio'].play();
+			break;
+		default:
+			console.log('som('+sound+','+type+'): switch = type inválido');
+	}
+	
 }
 
-
+function somdefundo(ultimosom)
+{
+	
+}
