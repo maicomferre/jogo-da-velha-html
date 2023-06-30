@@ -144,6 +144,7 @@ canvas{
 table{
     position:relative;
     top:50px;
+    left: 200px;
 }
 tr:first-child td{
     border:1px solid #000;
