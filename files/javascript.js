@@ -4,7 +4,17 @@ var Player = [0,1];
 
 //Efeitos Sonoros
 var path = "files/sound/";
+var estadosom = true;
 ;
+
+
+var images = {
+	'soundon':  { file: 'files/sondon.png' },
+	'soundoff': { file: 'files/sondoff.png'},
+};
+
+
+
 var sound_path = {
 	'error':      {file:'wrong-buzzer-6268.mp3'},
 	'game_click': {file:'click-for-game-menu-131903.mp3'},
@@ -45,6 +55,7 @@ var canvas_posicao_click = [
 
 $(document).ready(function(){
 	sound_load();
+	image_load();
 	canvas = load_canvas();
 	write_game(canvas);
 	canvas_context = canvas;
@@ -52,6 +63,8 @@ $(document).ready(function(){
 	$('#game').on('mousedown', function(e) {
     	getCursorPosition(canvas, e);
 	});
+
+	$('#imgsom').on('click', function(){ alternarsom() });
 });
 
 function comecar()
@@ -242,4 +255,17 @@ function vencedor_pagina()
 	$('#player2win').html(Player[1]['venceu'] );
 	$('#player2lost').html(Player[1]['perdeu'] );
 	$('#player2name').html(Player[1]['nome'] );
+}
+
+function alternarsom()
+{
+	estadosom = !estadosom;
+
+	let s = undefined;
+	s = (estadosom ? (images['soundon']) : (images['soundoff']));
+	$("#imgsom").html();
+	$("#imgsom").html(s['img']);
+
+	document.getElementById("imgsom").appendChild(s['img']);
+
 }

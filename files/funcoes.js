@@ -32,3 +32,29 @@ function resetar()
 }
 
 
+
+function image_load()
+{
+	images['soundon']['img'] = new Image();
+
+	images['soundon']['img'].onerror = function()
+	{
+		console.log("error image_load(): não foi possível carregar imagem; ação: ignorar");
+	}
+
+	images['soundon']['img'].src = images['soundon']['file'];
+
+	document.getElementById("imgsom").appendChild(images['soundon']['img']);
+
+	images['soundoff']['img'] = new Image();
+
+	images['soundoff']['img'].onerror = function()
+	{
+		console.log("error image_load(): não foi possível carregar imagem; ação: ignorar");
+	}
+
+	images['soundoff']['img'].src = images['soundoff']['file'];
+
+
+}
+
