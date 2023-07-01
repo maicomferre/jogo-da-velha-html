@@ -47,6 +47,8 @@ var interval_control = false;
 var velha_selecionado = [];
 var velha_game = {};
 var antidouble = false;
+var soundoff = false;
+var tmp_gestor_som = [];
 
 velha_game = [
 	[' ', ' ', ' '],
@@ -196,8 +198,8 @@ function checkClick(canvas,x,y)
 
 				if(verificar(velha_game) == true)
 				{
-					//jogador_atual venceu
-					alert(Player[((jogador_atual) ? 1 : 0)]['nome']+" Venceu!");
+					vencedor_pagina();
+					return true;
 				}
 
 				jogador_atual = !jogador_atual;
