@@ -2,6 +2,9 @@ var lista_som = [
 	"error",
 	"game_click",
 	"back_sound",
+	"inicio",
+	"velha",
+	"fimjogo",
 ];
 
 var Player = [0,1];
@@ -21,6 +24,9 @@ var esom = {
 	'error':      {'file':'wrong-buzzer-6268.mp3'},
 	'game_click': {'file':'click-for-game-menu-131903.mp3'},
 	'back_sound': {'file':'merx-market-song-33936.mp3'},
+	'inicio':     {'file':'angelical-pad-143276.mp3'},
+	'velha':      {'file':'game-over-arcade-6435.mp3'},
+	"fimjogo":    {'file':'cinematic-intro-6097.mp3'},
 };
 
 
@@ -99,6 +105,8 @@ $(document).ready(function(){
 	});
 
 	$('#imgsom').on('click', function(){ alternarsom() });
+
+	som_controlador1 = som("inicio",'iniciar','loop');	
 
 });
 

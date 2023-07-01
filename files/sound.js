@@ -35,8 +35,16 @@ function sound_load()
 	}
 }
 
-function som(sound, type)
+function som(sound, type,other=null)
 {
+	if(sound == 'todos')
+	{
+		for(let x=0; x<lista_som.length; x++)
+		{
+			som(lista_som[x],type,other);
+		}
+		return false;
+	}
 	if(esom[sound] === undefined)
 	{
 		console.log('som('+sound+','+type+'): sound indefinido; Ação: cancelar.');
@@ -49,6 +57,7 @@ function som(sound, type)
 		return false;
 	}
 	
+
 	switch(type)
 	{
 		case 'pausar':
@@ -69,7 +78,11 @@ function som(sound, type)
 		default:
 			console.log('som('+sound+','+type+'): switch = type inválido');
 	}
-	
+
+	if(other == 'loop')
+	{
+		esom[sound]['audio'].loop = true;
+	}
 }
 
 
@@ -84,6 +97,13 @@ function alternarsom()
 	$("#imgsom").html(s['img']);
 
 	document.getElementById("imgsom").appendChild(s['img']);
+
+	if(estadosom == true)
+		som('todos','reiniciar');
+	else
+		som('todos','pausar');
+
+
 
 }
 

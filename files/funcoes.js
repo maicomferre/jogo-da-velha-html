@@ -10,7 +10,7 @@ function showerror(msg,time=4000)
 {
 	if(antidouble)return;
 
-	som['error']['audio'].play();	
+	som('error','iniciar');
 	$("#errormessage").html(msg);
 	$("#errormessage").toggle('slow');
 	antidouble = true;
@@ -69,7 +69,7 @@ function init_playercolor()
 
 
 function comecar()
-{
+{	
 	var player1 = document.getElementById('player1').value;
 	var player2 = document.getElementById('player2').value;
 
@@ -94,6 +94,7 @@ function comecar()
 		showerror("Por favor, preencha no máximo 15 caracteres no segundo usuario.");
 		return false;
 	}		
+	som("inicio","pausar");	
 
 	Player[0] = {};
 	Player[0]['nome'] = player1;
@@ -154,6 +155,8 @@ function image_load()
 
 function vencedor_pagina()
 {
+	som('todos',"pausar");
+	som('fimjogo',"reiniciar");
 	$('#opt3').show('slow');
 	$('#opt2').hide('fast');
 	$('#opt1').hide('fast');
