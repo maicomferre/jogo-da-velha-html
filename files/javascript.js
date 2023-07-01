@@ -1,34 +1,46 @@
+var lista_som = [
+	"error",
+	"game_click",
+	"back_sound",
+];
+
 var Player = [0,1];
 
 
 //Efeitos Sonoros
-var path = "files/sound/";
+var som_pasta = "files/sound/";
 var estadosom = true;
 
 
 var images = {
-	'soundon':  { file: 'files/sondon.png' },
-	'soundoff': { file: 'files/sondoff.png'},
+	'soundon':  { 'file': 'files/sondon.png' },
+	'soundoff': { 'file': 'files/sondoff.png'},
 };
 
-var sound_path = {
-	'error':      {file:'wrong-buzzer-6268.mp3'},
-	'game_click': {file:'click-for-game-menu-131903.mp3'},
-	'back_sound': {file:'merx-market-song-33936.mp3'},
-}
+var esom = {
+	'error':      {'file':'wrong-buzzer-6268.mp3'},
+	'game_click': {'file':'click-for-game-menu-131903.mp3'},
+	'back_sound': {'file':'merx-market-song-33936.mp3'},
+};
 
-var sound_list = ['error','game_click','back_sound'];
-canvas_context = undefined;
 
 var jogador_atual = Boolean(Math.random() < 0.5);
 
+
+//Editaveis
+var player_color = [
+	"#EEAABB",
+	"#FFFFFF",
+];
+
 //Config
+canvas_context = undefined;
 var canvas = undefined;
 var playerinterval = null;
-var player_color = "#EEAABB";
 var interval_control = false;
 var velha_selecionado = [];
 var velha_game = {};
+var antidouble = false;
 
 velha_game = [
 	[' ', ' ', ' '],
@@ -55,6 +67,26 @@ var canvas_posicao_click = [
 
 ];
 
+/*
+var lang = ['pt-br','en'];
+
+lang['pt-br'][''] = '';
+lang['pt-br'][''] = '';
+lang['pt-br'][''] = '';
+lang['pt-br'][''] = '';
+lang['pt-br'][''] = '';
+lang['pt-br'][''] = '';
+lang['pt-br'][''] = '';
+lang['pt-br'][''] = '';
+lang['pt-br'][''] = '';
+lang['pt-br'][''] = '';
+lang['pt-br'][''] = '';
+lang['pt-br'][''] = '';
+lang['pt-br'][''] = '';
+*/
+
+
+
 $(document).ready(function(){
 	sound_load();
 	image_load();
@@ -70,67 +102,7 @@ $(document).ready(function(){
 
 });
 
-function comecar()
-{
-	var player1 = document.getElementById('player1').value;
-	var player2 = document.getElementById('player2').value;
 
-	if(player1.length < 3)
-	{
-		showerror("Por favor, preencha pelo menos 3 caracteres no primeiro usuario.");
-		return false;
-	}
-	if(player2.length < 3)
-	{
-		showerror("Por favor, preencha pelo menos 3 caracteres no segundo usuario.");
-		return false;
-	}	
-
-	if(player1.length > 15)
-	{
-		showerror("Por favor, preencha no máximo 15 caracteres no primeiro usuario.");
-		return false;
-	}
-	if(player2.length > 15)
-	{
-		showerror("Por favor, preencha no máximo 15 caracteres no segundo usuario.");
-		return false;
-	}		
-
-	Player[0] = {};
-	Player[0]['nome'] = player1;
-	Player[0]['score'] = 0;
-	Player[0]['venceu'] = 0;
-	Player[0]['perdeu'] = 0;
-
-	Player[1] = {};
-	Player[1]['nome'] = player2;
-	Player[1]['score'] = 0;
-	Player[1]['venceu'] = 0;
-	Player[1]['perdeu'] = 0;
-
-	$("#username0").text(player1)
-	$("#username1").text(player2);
-
-	$('#opt1').toggle('slow');
-	$('#opt2').toggle('slow');
-
-	/*for(let x=0; x<3; x++)
-		for(let y=0; y<3; y++)
-			velha_game[x,y] = ' ';*/
-
-	setTimeout(function(){
-
-		sound_path['back_sound']['audio'].play();
-
-	},3000);
-}
-
-function voltar_ao_menu()
-{
-	$('#opt1').toggle('slow');
-	$('#opt2').toggle('slow');	
-}
 
 function load_canvas()
 {
@@ -168,29 +140,6 @@ function write_game(context)
 	init_playercolor()
 }
 
-function init_playercolor()
-{
-	if(playerinterval != null){
-		clearInterval(playerinterval);
-		let tmp = !jogador_atual ? "1" : "0";
-		$('#username'+tmp).css("background-color",'transparent');
-	}
-
-
-	playerinterval = setInterval(function(){
-		let tmp = jogador_atual ? "1" : "0";
-
-		let usercolor = "#FFFFFF";
-		
-		if(interval_control)
-			usercolor = player_color;
-
-		interval_control = !interval_control;
-
-		$('#username'+tmp).css("background-color",usercolor);
-	},400);	
-}
-
 function draw_option(type,cx,x,y)
 {
 	cx.beginPath();
@@ -225,8 +174,8 @@ function checkClick(canvas,x,y)
 		{
 			if(!velha_selecionado[z])
 			{
-				sound_path['game_click']['audio'].currentTime = 0;
-				sound_path['game_click']['audio'].play();				
+
+				som('game_click','reiniciar');
 				
 				draw_option(jogador_atual,canvas,canvas_velha[z][0],canvas_velha[z][1]);
 				velha_selecionado[z] = true;
@@ -274,47 +223,11 @@ function verificar(vg)
 			if(vg[0][0] === vg[1][1] && vg[1][1] === vg[2][2])return true;//Cruzado \
 
 			if(vg[2][0] === vg[1][1] && vg[1][1] === vg[0][2])return true;//Cruzado /
-
-
 		}
 	}
 
 
 	return false;
-}
-
-function vencedor_pagina()
-{
-	$('#opt3').show('slow');
-	$('#opt2').hide('fast');
-	$('#opt1').hide('fast');
-
-
-	$('#playerwin').html(Player[((jogador_atual) ? 1 : 0)]['nome']);
-	$('#playerlost').html(Player[(jogador_atual) ? 0 : 1]['nome']);
-
-	$('#player1score').html(Player[0]['score'] );
-	$('#player1win').html(Player[0]['venceu'] );
-	$('#player1lost').html(Player[0]['perdeu'] );
-	$('#player1name').html(Player[0]['nome'] );
-
-	$('#player2score').html(Player[1]['score'] );
-	$('#player2win').html(Player[1]['venceu'] );
-	$('#player2lost').html(Player[1]['perdeu'] );
-	$('#player2name').html(Player[1]['nome'] );
-}
-
-function alternarsom()
-{
-	estadosom = !estadosom;
-
-	let s = undefined;
-	s = (estadosom ? (images['soundon']) : (images['soundoff']));
-	$("#imgsom").html();
-	$("#imgsom").html(s['img']);
-
-	document.getElementById("imgsom").appendChild(s['img']);
-
 }
 
 

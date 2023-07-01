@@ -1,13 +1,13 @@
 
 function sound_load()
 {
-	for(let x=0; x<sound_list.length; x++)
+	for(let x=0; x<lista_som.length; x++)
 	{
-		if(sound_path[sound_list[x]]['file'] == undefined)
+		if(esom[lista_som[x]]['file'] == undefined)
 		{
-			console.log("error sound_load(): sound_path[sound_list["+x+"]]['file'] is undefined");
+			console.log("error sound_load(): som[lista_som["+x+"]]['file'] is undefined");
 		}
-		sound_path[sound_list[x]]['loaded'] = false;
+		esom[lista_som[x]]['loaded'] = false;
 
 		if(new window.Audio() === undefined)
 		{
@@ -15,29 +15,29 @@ function sound_load()
 			return false;
 		}
 
-		sound_path[sound_list[x]]['audio'] = new Audio();
+		esom[lista_som[x]]['audio'] = new Audio();
 
 
-		sound_path[sound_list[x]]['audio'].onerror = function()
+		esom[lista_som[x]]['audio'].onerror = function()
 		{
 			console.log("error sound_load(): não foi possivel carregar o audio; ação: ignorando.");
 		}
 
 
-		sound_path[sound_list[x]]['audio'].onload = function()
+		esom[lista_som[x]]['audio'].onload = function()
 		{
-			sound_path[sound_list[x]]['loaded'] = true;
+			som[lista_som[x]]['loaded'] = true;
 		}
 
-		sound_path[sound_list[x]]['audio'].src = path + sound_path[sound_list[x]]['file'];
-		sound_path[sound_list[x]]['audio'].currentTime = 0;
+		esom[lista_som[x]]['audio'].src = som_pasta + esom[lista_som[x]]['file'];
+		esom[lista_som[x]]['audio'].currentTime = 0;
 	
 	}
 }
 
 function som(sound, type)
 {
-	if(sound_path[sound] === undefined)
+	if(esom[sound] === undefined)
 	{
 		console.log('som('+sound+','+type+'): sound indefinido; Ação: cancelar.');
 		return false;
@@ -52,19 +52,19 @@ function som(sound, type)
 	switch(type)
 	{
 		case 'pausar':
-			sound_path[sound]['audio'].pause();
+			esom[sound]['audio'].pause();
 			
 			break;
 		case 'iniciar':
-			sound_path[sound]['audio'].play();
+			esom[sound]['audio'].play();
 			break;
 		case 'cancelar':
-			sound_path[sound]['audio'].pause();
-			sound_path[sound]['audio'].currentTime = 0;
+			esom[sound]['audio'].pause();
+			esom[sound]['audio'].currentTime = 0;
 			break;
 		case 'reiniciar':
-			sound_path[sound]['audio'].currentTime = 0;
-			sound_path[sound]['audio'].play();
+			esom[sound]['audio'].currentTime = 0;
+			esom[sound]['audio'].play();
 			break;
 		default:
 			console.log('som('+sound+','+type+'): switch = type inválido');
@@ -72,7 +72,24 @@ function som(sound, type)
 	
 }
 
+
+
+function alternarsom()
+{
+	estadosom = !estadosom;
+
+	let s = undefined;
+	s = (estadosom ? (images['soundon']) : (images['soundoff']));
+	$("#imgsom").html();
+	$("#imgsom").html(s['img']);
+
+	document.getElementById("imgsom").appendChild(s['img']);
+
+}
+
 function somdefundo(ultimosom)
 {
 	
 }
+
+
