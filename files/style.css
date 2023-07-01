@@ -139,6 +139,8 @@ canvas{
 }
 #imgsom {
     padding:20px;
+    z-index: 999;
+    user-select: none;    
 }
 
 table{
