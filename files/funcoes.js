@@ -23,6 +23,10 @@ function showerror(msg,time=4000)
 
 function resetar()
 {
+	for(let x=0; x<3; x++)
+		for(let y=0; y<3; y++)
+			velha_game[x][y] = ' ';
+
 	canvas_context.ctx.clearRect(0, 0, canvas_context.canvas.width, canvas_context.canvas.height);
 
 	for(let z=0; z<canvas_posicao_click.length; z++)
@@ -54,7 +58,5 @@ function image_load()
 	}
 
 	images['soundoff']['img'].src = images['soundoff']['file'];
-
-
 }
 

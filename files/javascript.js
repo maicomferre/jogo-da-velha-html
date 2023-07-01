@@ -1,19 +1,15 @@
 var Player = [0,1];
 
 
-
 //Efeitos Sonoros
 var path = "files/sound/";
 var estadosom = true;
-;
 
 
 var images = {
 	'soundon':  { file: 'files/sondon.png' },
 	'soundoff': { file: 'files/sondoff.png'},
 };
-
-
 
 var sound_path = {
 	'error':      {file:'wrong-buzzer-6268.mp3'},
@@ -32,7 +28,13 @@ var playerinterval = null;
 var player_color = "#EEAABB";
 var interval_control = false;
 var velha_selecionado = [];
+var velha_game = {};
 
+velha_game = [
+	[' ', ' ', ' '],
+	[' ', ' ', ' '],
+	[' ', ' ', ' '],
+];
 
 var canvas_velha = [
 	[70,25],[160,25],[250,25],
@@ -65,6 +67,7 @@ $(document).ready(function(){
 	});
 
 	$('#imgsom').on('click', function(){ alternarsom() });
+
 });
 
 function comecar()
@@ -111,6 +114,10 @@ function comecar()
 
 	$('#opt1').toggle('slow');
 	$('#opt2').toggle('slow');
+
+	/*for(let x=0; x<3; x++)
+		for(let y=0; y<3; y++)
+			velha_game[x,y] = ' ';*/
 
 	setTimeout(function(){
 
@@ -224,16 +231,56 @@ function checkClick(canvas,x,y)
 				draw_option(jogador_atual,canvas,canvas_velha[z][0],canvas_velha[z][1]);
 				velha_selecionado[z] = true;
 
+
+				w = obterPosicaoEmArray(z);
+
+				velha_game[w.a][w.b] = obterSimboloJogaodor(jogador_atual);
+				console.log("x = "+w.a+'  |  y='+w.b);
+
+				if(verificar(velha_game) == true)
+				{
+					//jogador_atual venceu
+					alert(Player[((jogador_atual) ? 1 : 0)]['nome']+" Venceu!");
+				}
+
 				jogador_atual = !jogador_atual;
-				init_playercolor();				
+				init_playercolor();
 			}
 		}
 	}
 }
 
-function verificar()
+function verificar(vg)
 {
-	
+
+	var vg = velha_game;
+
+	for(var x=0; x < 3; x++)
+	{
+		console.log("x=" + x + ' ' +  velha_game[x][0] + '   |   '+velha_game[x][1]+'   |   '+velha_game[x][2]);
+		if(vg[0][x] != " ")
+		{
+			if(vg[0][x] === vg[1][x] && vg[1][x] === vg[2][x])return true;
+		}
+		if(vg[x][0] != " ")
+		{
+			if(vg[x][0] === vg[x][1] && vg[x][1] === vg[x][2])return true;
+		}
+
+		if(vg[1][1] != " ")
+		{
+			//if(vg[0][1] === vg[1][1] && vg[1][1] === vg[2][1])return true;//No meio
+
+			if(vg[0][0] === vg[1][1] && vg[1][1] === vg[2][2])return true;//Cruzado \
+
+			if(vg[2][0] === vg[1][1] && vg[1][1] === vg[0][2])return true;//Cruzado /
+
+
+		}
+	}
+
+
+	return false;
 }
 
 function vencedor_pagina()
@@ -268,4 +315,38 @@ function alternarsom()
 
 	document.getElementById("imgsom").appendChild(s['img']);
 
+}
+
+
+function obterPosicaoEmArray(x)
+{			
+	// ---- 0     1     2 <<  
+	// 0  | 0  |  1 |  2 |
+	// 1  | 3  |  4 |  5 |
+	// 2  | 6  |  7 |  8 |
+
+	let a, b;
+
+	if(x <= 2)
+		a = 0 ;
+	else if(x <= 5)
+		a = 1;
+	else if(x <= 8)
+		a = 2;
+	else
+		console.log("getpos(x="+x+"): Erro x invalido");
+
+	b=x;
+
+	if(a == 1)
+		b = b -3;
+	if(a == 2)
+		b = b - 6;
+
+	return {a,b};
+}
+
+function obterSimboloJogaodor(player)
+{
+	return player ? ("O") : ("X");
 }
