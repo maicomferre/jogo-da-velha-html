@@ -191,3 +191,15 @@ tr:first-child td{
   color: #fff;
   cursor: pointer;
 }
+
+.win {
+  position: relative;
+  top: 30px;
+  text-align: center;
+}
+
+.lost {
+  position: relative;
+  top: 60px;
+  text-align: center;
+}

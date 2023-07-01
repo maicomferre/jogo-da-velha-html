@@ -1,13 +1,13 @@
-
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script type="text/javascript" src="files/definicoes.js"></script>    
+    <script type="text/javascript" src="files/definicoes.js"></script>
     <script type="text/javascript" src="files/jquery-3.7.0.min.js"></script>
-	<script type="text/javascript" src="files/sound.js"></script>
+    <script type="text/javascript" src="files/sound.js"></script>
     <script type="text/javascript" src="files/funcoes.js"></script>
     <script type="text/javascript" src="files/javascript.js"></script>
     <link rel="stylesheet" href="files/style.css">
@@ -17,11 +17,13 @@
     <link rel="shortcut icon" href="files/imagens/favicon.png" type="image/x-icon">
     <title>Jogo da Velha</title>
 </head>
+
 <body>
-    <h1>JOGO DA VELHA <div  id="imgsom"></div></h1>
+    <h1>JOGO DA VELHA <div id="imgsom"></div>
+    </h1>
 
     <div class="opt" id="opt1">
-         <div>
+        <div>
             <p id="errormessage" style="display: none;"></p>
             <br><br>
             <img id="imgvelha" src="files/imagens/velha.png" alt="velha"><br>
@@ -48,28 +50,19 @@
             <tr>
                 <td colspan="2"><button class="btn-menu" onClick="voltar_ao_menu()"> Alterar Nomes </button></td>
                 <td colspan="2"><button class="btn-restart" onClick="resetar()">Reiniciar Jogo</button></td>
-                <td colspan="2"><button onClick="vencedor_pagina();" title="Botao temporário">Botão de Vencedor</button></td>
+                <td colspan="2"><button onClick="vencedor_pagina();" title="Botao temporário">Botão de Vencedor</button>
+                </td>
             </tr>
 
-        </table> 
+        </table>
     </div>
 
     <div class="opt" id="opt3" style="display:none;">
-        no caso <br><br><br>
+        <p class="win"> O Jogador <span id="playerwin"></span></p>
 
-        ids <br>
-        #playerwin = nome do jogador que venceu &nbsp;<br>
-        #playerlost = nome do jogador que perdeu<br>
-        
-        #player1score = score do jogador 1 <br>
-        #player1win = vezes que o player1 venceu<br>
-        #player1lost = vezes que o player1 perdeu<br>
-        #player1name = nome do player1<br>
+        <p class="lost">O Jogador <span id="playerlost"></span> Perdedor</p>
 
-        com o player2 o mesmo so muda o número.<br>
-
-        Exemplo:<br><br>
-        <p id="playerwin"></p>
     </div>
 </body>
+
 </html>
