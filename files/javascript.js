@@ -199,7 +199,6 @@ function checkClick(canvas,x,y)
 				if(verificar(velha_game) == true)
 				{
 					vencedor_pagina();
-					return true;
 				}
 
 				jogador_atual = !jogador_atual;

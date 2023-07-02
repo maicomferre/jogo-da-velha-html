@@ -132,7 +132,6 @@ function som_gestor(acao)
 
 function alternarsom()
 {
-
 	let s = undefined;
 	s = (soundoff ? (images['soundon']) : (images['soundoff']));
 	$("#imgsom").html();
@@ -141,9 +140,6 @@ function alternarsom()
 	document.getElementById("imgsom").appendChild(s['img']);
 
 	som_gestor(soundoff);
-
-
-
 }
 
 function somdefundo(ultimosom)

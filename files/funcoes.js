@@ -57,9 +57,9 @@ function init_playercolor()
 
 
 	playerinterval = setInterval(function(){
-		let tmp = jogador_atual ? "1" : "0";
+		let tmp = jogador_atual ? 1 : 0;
 		
-		let usercolor = player_color[interval_control];
+		let usercolor = player_color[(interval_control ? 1: 0)];
 
 		interval_control = !interval_control;
 
