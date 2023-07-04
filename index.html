@@ -60,16 +60,67 @@
     <div class="opt" id="opt3" style="display:none;">
        <div class="win"> 
 
-            <h4> O JOGADOR <span id="playerwin"></span> E O VENCEDOR</h4>
-            <h5>SCORE: <span id="player1score"></span></h5>
-       
+            <h4> O Jogador <span id="playerwinname"></span> Venceu</h4>
+
+            <div class="tablealin">
+                <table border="1px">
+                    <tr>
+                        <td colspan="2">Ganhador</td>
+                    </tr>
+                    <tr>
+                        <td>Player</td>
+                        <td><span id="playerwinname2"></span></td>
+                    </tr>                    
+                    <tr>
+                        <td>Score</td>
+                        <td><span id="playerwinscore"></span></td>
+                    </tr>
+                    <tr>
+                        <td>Jogadas</td>
+                        <td><span id="playerwintimes"></span></td>
+                    </tr>
+                    <tr>
+                        <td>Vezes que Ganhou</td>
+                        <td><span id="playerwin"></span></td>
+                    </tr>
+                    <tr>
+                        <td>Vezes que Perdeu</td>
+                        <td><span id="playerwinlost"></span></td>
+                    </tr>
+                </table>
+
+                 <table border="1px" style="position:relative;float:left; margin:10px; padding:10px;">
+                    <tr>
+                        <td colspan="2">Perdedor</td>
+                    </tr>
+                    <tr>
+                        <td>Player</td>
+                        <td><span id="playerlostname"></span></td>
+                    </tr>                   
+                    <tr>
+                        <td>Score</td>
+                        <td><span id="playerlostscore"></span></td>
+                    </tr>
+                    <tr>
+                        <td>Jogadas</td>
+                        <td><span id="playerlosttimes"></span></td>
+                    </tr>
+                    <tr>
+                        <td>Vezes que Ganhou</td>
+                        <td><span id="playerlostwin"></span></td>
+                    </tr>
+                    <tr>
+                        <td>Vezes que Perdeu</td>
+                        <td><span id="playerlostlost"></span></td>
+                    </tr>
+                </table> 
+
+                <table id="tableoption">
+                    <tr><th onClick="resetar('novamente');">Jogar Novamente</th></tr>
+                    <tr><th>Ver Jogo</th></tr>
+                </table>
+            </div> 
         </div>
-
-        <div class="lost">
-
-        </div>
-
-
     </div>
 </body>
 

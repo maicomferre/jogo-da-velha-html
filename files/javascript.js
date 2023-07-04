@@ -184,6 +184,10 @@ function checkClick(canvas,x,y)
 		{
 			if(!velha_selecionado[z])
 			{
+				let  jat = jogador_atual_int(jogador_atual);
+				let outroj = jogador_atual_int(!jogador_atual);
+
+				Player[jat]['jogadas']++;
 
 				som('game_click','reiniciar');
 				
@@ -194,12 +198,20 @@ function checkClick(canvas,x,y)
 				w = obterPosicaoEmArray(z);
 
 				velha_game[w.a][w.b] = obterSimboloJogaodor(jogador_atual);
-				console.log("x = "+w.a+'  |  y='+w.b);
+				//console.log("x = "+w.a+'  |  y='+w.b);
 
 				if(verificar(velha_game) == true)
 				{
+					Player[jat]['venceu']++;
+					Player[jat]['score'] += calcular_score('ganhou',jat);
+
+					Player[outroj]['perdeu']++;
+					Player[outroj]['score'] += calcular_score('perdeu',outroj);
+
 					vencedor_pagina();
+
 				}
+
 
 				jogador_atual = !jogador_atual;
 				init_playercolor();
@@ -268,7 +280,28 @@ function obterPosicaoEmArray(x)
 	return {a,b};
 }
 
+function jogador_atual_int(ejogador_atual)
+{
+	return (ejogador_atual ? 1 : 0);
+}
+
 function obterSimboloJogaodor(player)
 {
 	return player ? ("O") : ("X");
+}
+
+function calcular_score(tipo,num)
+{
+	let scored = 0;
+	let jogadaspossiveis = -5;
+	if(tipo == 'perdeu')
+	{
+		scored = parseInt(Player[num]['jogadas']) + jogadaspossiveis;		
+	}
+	else
+	{
+		scored = parseInt(Player[num]['jogadas']) - jogadaspossiveis;
+	}
+
+	return scored;
 }

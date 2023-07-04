@@ -23,7 +23,7 @@ function showerror(msg,time=4000)
 }
 
 
-function resetar()
+function resetar(novamente=false)
 {
 	for(let x=0; x<3; x++)
 		for(let y=0; y<3; y++)
@@ -35,6 +35,20 @@ function resetar()
 		velha_selecionado[z] = false;
 	
 	write_game(canvas_context);
+
+
+	Player[0]['jogadas'] = 0;
+	Player[1]['jogadas'] = 0;
+
+	if(novamente)
+	{
+		som('todos',"pausar");
+		som("back_sound",'reiniciar','loop');
+		$('#opt3').hide('slow');
+		$('#opt2').show('fast');
+		$('#opt1').hide();		
+	}
+
 }
 
 
@@ -101,12 +115,15 @@ function comecar()
 	Player[0]['score'] = 0;
 	Player[0]['venceu'] = 0;
 	Player[0]['perdeu'] = 0;
+	Player[0]['jogadas'] = 0;
 
 	Player[1] = {};
 	Player[1]['nome'] = player2;
 	Player[1]['score'] = 0;
 	Player[1]['venceu'] = 0;
 	Player[1]['perdeu'] = 0;
+	Player[1]['jogadas'] = 0;
+
 
 	$("#username0").text(player1)
 	$("#username1").text(player2);
@@ -161,17 +178,21 @@ function vencedor_pagina()
 	$('#opt2').hide('fast');
 	$('#opt1').hide('fast');
 
+	let win = (jogador_atual) ? 1 : 0;
+	let lost = (jogador_atual) ? 0 : 1;
 
-	$('#playerwin').html(Player[((jogador_atual) ? 1 : 0)]['nome']);
-	$('#playerlost').html(Player[(jogador_atual) ? 0 : 1]['nome']);
 
-	$('#player1score').html(Player[0]['score'] );
-	$('#player1win').html(Player[0]['venceu'] );
-	$('#player1lost').html(Player[0]['perdeu'] );
-	$('#player1name').html(Player[0]['nome'] );
+	$('#playerwinname').html(Player[win]['nome']);
+	$('#playerwinname2').html(Player[win]['nome']);
+	$('#playerwinscore').html(Player[win]['score'] );
+	$('#playerwin').html(Player[win]['venceu'] );
+	$('#playerwinlost').html(Player[win]['perdeu'] );
+	$("#playerwintimes").html(Player[win]['jogadas'] )
 
-	$('#player2score').html(Player[1]['score'] );
-	$('#player2win').html(Player[1]['venceu'] );
-	$('#player2lost').html(Player[1]['perdeu'] );
-	$('#player2name').html(Player[1]['nome'] );
+	$('#playerlostname').html(Player[lost]['nome']);
+	$('#playerlostscore').html(Player[lost]['score'] );
+	$('#playerlostwin').html(Player[lost]['venceu'] );
+	$('#playerlostlost').html(Player[lost]['perdeu'] );
+	$("#playerlosttimes").html(Player[lost]['jogadas'] )
+
 }

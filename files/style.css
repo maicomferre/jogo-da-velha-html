@@ -195,6 +195,7 @@ tr:first-child td{
 }
 
 .win{
+  user-select: none;
   position: relative;
   top: 30px;
   justify-content: center;
@@ -214,4 +215,33 @@ tr:first-child td{
   text-align: center;
   font-size: 30px;
   color: #000;
+}
+
+.tablealin{
+    margin-left:-200px;
+}
+.tablealin table{
+    position: relative;
+    text-align: center;
+    float:left;
+    margin:10px;
+    padding:10px;
+}
+.tablealin td{
+    padding:10px;
+}
+
+#tableoption tr,th{
+    border-radius:6px;
+    padding:10px;
+    background:linear-gradient(#b0daf1,#90cded);
+}
+#tableoption th:hover{
+    background:linear-gradient(#90cded,#b0daf1);
+    cursor:pointer;
+}
+#tableoption th:active{
+    padding:4px;
+    border:5px solid #1aafa3d8;
+    box-shadow:4px 4px 8px #15468f;
 }
