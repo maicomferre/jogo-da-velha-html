@@ -18,7 +18,7 @@ function showerror(msg,time=4000)
 	setTimeout(function(){
 		$("#errormessage").toggle('slow');	
 		antidouble=false;
-		som['error']['audio'].currentTime = 0;
+		som("error",'reiniciar');
 	},time);
 }
 
@@ -48,10 +48,7 @@ function resetar(novamente=false)
 		$('#opt2').show('fast');
 		$('#opt1').hide();		
 	}
-
 }
-
-
 
 
 function voltar_ao_menu()
@@ -131,15 +128,8 @@ function comecar()
 	$('#opt1').toggle('slow');
 	$('#opt2').toggle('slow');
 
-	/*for(let x=0; x<3; x++)
-		for(let y=0; y<3; y++)
-			velha_game[x,y] = ' ';*/
-
 	setTimeout(function(){
-
-		//som['back_sound']['audio'].play();
 		som('back_sound','iniciar');
-
 	},3000);
 }
 

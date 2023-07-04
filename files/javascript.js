@@ -227,7 +227,7 @@ function verificar(vg)
 
 	for(var x=0; x < 3; x++)
 	{
-		console.log("x=" + x + ' ' +  velha_game[x][0] + '   |   '+velha_game[x][1]+'   |   '+velha_game[x][2]);
+		//console.log("x=" + x + ' ' +  velha_game[x][0] + '   |   '+velha_game[x][1]+'   |   '+velha_game[x][2]);
 		if(vg[0][x] != " ")
 		{
 			if(vg[0][x] === vg[1][x] && vg[1][x] === vg[2][x])return true;
