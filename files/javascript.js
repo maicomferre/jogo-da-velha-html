@@ -75,24 +75,6 @@ var canvas_posicao_click = [
 
 ];
 
-/*
-var lang = ['pt-br','en'];
-
-lang['pt-br'][''] = '';
-lang['pt-br'][''] = '';
-lang['pt-br'][''] = '';
-lang['pt-br'][''] = '';
-lang['pt-br'][''] = '';
-lang['pt-br'][''] = '';
-lang['pt-br'][''] = '';
-lang['pt-br'][''] = '';
-lang['pt-br'][''] = '';
-lang['pt-br'][''] = '';
-lang['pt-br'][''] = '';
-lang['pt-br'][''] = '';
-lang['pt-br'][''] = '';
-*/
-
 
 
 $(document).ready(function(){
