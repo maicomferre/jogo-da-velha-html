@@ -1,4 +1,4 @@
-Jogo da velha.
+### Jogo da velha. ###
 
 ![alt text](/files/imagens/Jogo_da_velha_Pagina_Inicial.png)
 
