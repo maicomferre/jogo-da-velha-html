@@ -81,8 +81,8 @@ function init_playercolor()
 
 function comecar()
 {	
-	var player1 = document.getElementById('player1').value;
-	var player2 = document.getElementById('player2').value;
+	let player1:any = $('#player1').val;
+	let player2:any = $('#player2').val;
 
 	if(player1.length < 3)
 	{
@@ -146,7 +146,7 @@ function image_load()
 
 	images['soundon']['img'].src = images['soundon']['file'];
 
-	document.getElementById("imgsom").appendChild(images['soundon']['img']);
+	$("#imgsom").append(images['soundon']['img']);
 
 	images['soundoff']['img'] = new Image();
 

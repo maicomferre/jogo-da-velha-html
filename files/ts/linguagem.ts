@@ -13,7 +13,7 @@ function carregar()
 {
 	for(let x=0; x<langs.length; x++)
 	{
-		$.ajax({
+		/*$.ajax({
 			method:'get',
 			url:language_path + (lang_file.replace("{file}", langs[x])),
 
@@ -24,6 +24,6 @@ function carregar()
 			faill:function(x){
 				console.log("carregar_linguagens(): Não foi possível carregar a linguagem "+langs[x]+' por '+x);
 			}
-		});
+		});*/
 	}
 }

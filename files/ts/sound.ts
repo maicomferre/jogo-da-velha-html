@@ -1,4 +1,6 @@
 
+//import 'definicoes';
+
 function sound_load()
 {
 	for(let x=0; x<lista_som.length; x++)
@@ -37,7 +39,7 @@ function sound_load()
 	}
 }
 
-function som(sound, type,other=null)
+function som(sound:string, type:string,other?:any)
 {
 	if(soundoff)return false;
 	if(sound == 'todos')
@@ -126,18 +128,17 @@ function som_gestor(acao)
 		{
 			som(tmp_gestor_som[x],'iniciar');
 		}
-		tmp_gestor_som = [];
+		tmp_gestor_som.splice(0);
 	}
 }
 
 function alternarsom()
 {
-	let s = undefined;
-	s = (soundoff ? (images['soundon']) : (images['soundoff']));
+	let s = (soundoff ? (images['soundon']) : (images['soundoff']));
 	$("#imgsom").html();
 	$("#imgsom").html(s['img']);
 
-	document.getElementById("imgsom").appendChild(s['img']);
+	let t = $("#imgsom").append(s['img']);
 
 	som_gestor(soundoff);
 }

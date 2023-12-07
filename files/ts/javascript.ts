@@ -1,4 +1,4 @@
-var lista_som = [
+var lista_som:string[] = [
 	"error",
 	"game_click",
 	"back_sound",
@@ -7,7 +7,7 @@ var lista_som = [
 	"fimjogo",
 ];
 
-var Player = [0,1];
+var Player = {};
 
 
 //Efeitos Sonoros
@@ -40,15 +40,15 @@ var player_color = [
 ];
 
 //Config
-canvas_context = undefined;
-var canvas = undefined;
-var playerinterval = null;
+var canvas_context:any;
+var canvas:any;
+var playerinterval:number;
 var interval_control = false;
-var velha_selecionado = [];
+var velha_selecionado:boolean[];
 var velha_game = {};
 var antidouble = false;
 var soundoff = false;
-var tmp_gestor_som = [];
+var tmp_gestor_som:string[];
 
 velha_game = [
 	[' ', ' ', ' '],
@@ -90,7 +90,7 @@ $(document).ready(function(){
 
 	$('#imgsom').on('click', function(){ alternarsom() });
 
-	som_controlador1 = som("inicio",'iniciar','loop');	
+	som("inicio",'iniciar','loop');	
 
 });
 
@@ -98,7 +98,7 @@ $(document).ready(function(){
 
 function load_canvas()
 {
-	var canvas = document.getElementById('game');
+	canvas = document.getElementById('game');
 
 	if(canvas.getContext == false)
 	{
@@ -166,7 +166,7 @@ function checkClick(canvas,x,y)
 		{
 			if(!velha_selecionado[z])
 			{
-				let  jat = jogador_atual_int(jogador_atual);
+				let jat = jogador_atual_int(jogador_atual);
 				let outroj = jogador_atual_int(!jogador_atual);
 
 				Player[jat]['jogadas']++;
@@ -177,7 +177,7 @@ function checkClick(canvas,x,y)
 				velha_selecionado[z] = true;
 
 
-				w = obterPosicaoEmArray(z);
+				let w = obterPosicaoEmArray(z);
 
 				velha_game[w.a][w.b] = obterSimboloJogaodor(jogador_atual);
 				//console.log("x = "+w.a+'  |  y='+w.b);
@@ -204,8 +204,7 @@ function checkClick(canvas,x,y)
 
 function verificar(vg)
 {
-
-	var vg = velha_game;
+	//var vg = velha_game;
 
 	for(var x=0; x < 3; x++)
 	{
