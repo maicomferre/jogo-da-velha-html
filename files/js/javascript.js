@@ -1,26 +1,7 @@
 "use strict";
-var lista_som = [
-    "error",
-    "game_click",
-    "back_sound",
-    "inicio",
-    "velha",
-    "fimjogo",
-];
-var Player = {};
-var som_pasta = "files/sound/";
-var estadosom = true;
-var images = {
-    'soundon': { 'file': 'files/sondon.png' },
-    'soundoff': { 'file': 'files/sondoff.png' },
-};
-var esom = {
-    'error': { 'file': 'wrong-buzzer-6268.mp3' },
-    'game_click': { 'file': 'click-for-game-menu-131903.mp3' },
-    'back_sound': { 'file': 'merx-market-song-33936.mp3' },
-    'inicio': { 'file': 'angelical-pad-143276.mp3' },
-    'velha': { 'file': 'game-over-arcade-6435.mp3' },
-    "fimjogo": { 'file': 'cinematic-intro-6097.mp3' },
+var Player = {
+    0: {},
+    1: {}
 };
 var jogador_atual = Boolean(Math.random() < 0.5);
 var player_color = [
@@ -156,7 +137,7 @@ function verificar(vg) {
     return false;
 }
 function obterPosicaoEmArray(x) {
-    let a, b;
+    let a = -1, b = -1;
     if (x <= 2)
         a = 0;
     else if (x <= 5)

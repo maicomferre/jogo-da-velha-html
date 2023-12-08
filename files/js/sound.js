@@ -1,4 +1,26 @@
 "use strict";
+var lista_som = [
+    "error",
+    "game_click",
+    "back_sound",
+    "inicio",
+    "velha",
+    "fimjogo",
+];
+var esom = {
+    'error': { 'file': 'wrong-buzzer-6268.mp3' },
+    'game_click': { 'file': 'click-for-game-menu-131903.mp3' },
+    'back_sound': { 'file': 'merx-market-song-33936.mp3' },
+    'inicio': { 'file': 'angelical-pad-143276.mp3' },
+    'velha': { 'file': 'game-over-arcade-6435.mp3' },
+    "fimjogo": { 'file': 'cinematic-intro-6097.mp3' },
+};
+var images = {
+    'soundon': { 'file': 'files/sondon.png' },
+    'soundoff': { 'file': 'files/sondoff.png' },
+};
+var som_pasta = "files/sound/";
+var estadosom = true;
 function sound_load() {
     for (let x = 0; x < lista_som.length; x++) {
         if (esom[lista_som[x]]['file'] == undefined) {
@@ -85,9 +107,7 @@ function som_gestor(acao) {
 function alternarsom() {
     let s = (soundoff ? (images['soundon']) : (images['soundoff']));
     $("#imgsom").html();
-    $("#imgsom").html(s['img']);
-    let t = $("#imgsom").append(s['img']);
+    $("#imgsom").html(s['file']);
+    let t = $("#imgsom").append(s['file']);
     som_gestor(soundoff);
-}
-function somdefundo(ultimosom) {
 }

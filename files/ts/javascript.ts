@@ -1,39 +1,11 @@
-var lista_som:string[] = [
-	"error",
-	"game_click",
-	"back_sound",
-	"inicio",
-	"velha",
-	"fimjogo",
-];
 
-var Player = {};
-
-
-//Efeitos Sonoros
-var som_pasta = "files/sound/";
-var estadosom = true;
-
-
-var images = {
-	'soundon':  { 'file': 'files/sondon.png' },
-	'soundoff': { 'file': 'files/sondoff.png'},
+var Player = {
+	0:{},
+	1:{}
 };
-
-var esom = {
-	'error':      {'file':'wrong-buzzer-6268.mp3'},
-	'game_click': {'file':'click-for-game-menu-131903.mp3'},
-	'back_sound': {'file':'merx-market-song-33936.mp3'},
-	'inicio':     {'file':'angelical-pad-143276.mp3'},
-	'velha':      {'file':'game-over-arcade-6435.mp3'},
-	"fimjogo":    {'file':'cinematic-intro-6097.mp3'},
-};
-
 
 var jogador_atual = Boolean(Math.random() < 0.5);
 
-
-//Editaveis
 var player_color = [
 	"#EEAABB",
 	"#FFFFFF",
@@ -109,7 +81,7 @@ function load_canvas()
 
 	return {ctx,canvas};
 }
-function write_game(context)
+function write_game(context:any)
 {
 	let cx = context.ctx;
 
@@ -132,7 +104,7 @@ function write_game(context)
 	init_playercolor()
 }
 
-function draw_option(type,cx,x,y)
+function draw_option(type:boolean,cx:any,x:number,y:number)
 {
 	cx.beginPath();
 	if(type)
@@ -148,12 +120,12 @@ function draw_option(type,cx,x,y)
 }
 
 
-function getCursorPosition(canvas, event) {
+function getCursorPosition(canvas:any, event:any) {
     checkClick(canvas.ctx,event.offsetX,event.offsetY);
 }
 
 
-function checkClick(canvas,x,y)
+function checkClick(canvas:HTMLObjectElement,x:number,y:number)
 {
 	for(let z=0; z<canvas_posicao_click.length; z++)
 	{
@@ -191,9 +163,7 @@ function checkClick(canvas,x,y)
 					Player[outroj]['score'] += calcular_score('perdeu',outroj);
 
 					vencedor_pagina();
-
 				}
-
 
 				jogador_atual = !jogador_atual;
 				init_playercolor();
@@ -202,7 +172,7 @@ function checkClick(canvas,x,y)
 	}
 }
 
-function verificar(vg)
+function verificar(vg:any)
 {
 	//var vg = velha_game;
 
@@ -233,17 +203,17 @@ function verificar(vg)
 }
 
 
-function obterPosicaoEmArray(x)
+function obterPosicaoEmArray(x:number)
 {			
 	// ---- 0     1     2 <<  
 	// 0  | 0  |  1 |  2 |
 	// 1  | 3  |  4 |  5 |
 	// 2  | 6  |  7 |  8 |
 
-	let a, b;
+	let a:number=-1, b:number=-1;
 
 	if(x <= 2)
-		a = 0 ;
+		a = 0;
 	else if(x <= 5)
 		a = 1;
 	else if(x <= 8)
@@ -261,17 +231,17 @@ function obterPosicaoEmArray(x)
 	return {a,b};
 }
 
-function jogador_atual_int(ejogador_atual)
+function jogador_atual_int(ejogador_atual:boolean)
 {
 	return (ejogador_atual ? 1 : 0);
 }
 
-function obterSimboloJogaodor(player)
+function obterSimboloJogaodor(player:boolean)
 {
 	return player ? ("O") : ("X");
 }
 
-function calcular_score(tipo,num)
+function calcular_score(tipo:string,num:number)
 {
 	let scored = 0;
 	let jogadaspossiveis = -5;

@@ -1,5 +1,29 @@
 
-//import 'definicoes';
+var lista_som:string[] = [
+	"error",
+	"game_click",
+	"back_sound",
+	"inicio",
+	"velha",
+	"fimjogo",
+];
+
+var esom = {
+	'error':      {'file':'wrong-buzzer-6268.mp3'},
+	'game_click': {'file':'click-for-game-menu-131903.mp3'},
+	'back_sound': {'file':'merx-market-song-33936.mp3'},
+	'inicio':     {'file':'angelical-pad-143276.mp3'},
+	'velha':      {'file':'game-over-arcade-6435.mp3'},
+	"fimjogo":    {'file':'cinematic-intro-6097.mp3'},
+};
+var images = {
+	'soundon':  { 'file': 'files/sondon.png' },
+	'soundoff': { 'file': 'files/sondoff.png'},
+};
+
+//Efeitos Sonoros
+var som_pasta = "files/sound/";
+var estadosom = true;
 
 function sound_load()
 {
@@ -106,7 +130,7 @@ function som(sound:string, type:string,other?:any)
 
 }
 
-function som_gestor(acao)
+function som_gestor(acao:boolean)
 {
 	if(acao == false)
 	{
@@ -136,16 +160,16 @@ function alternarsom()
 {
 	let s = (soundoff ? (images['soundon']) : (images['soundoff']));
 	$("#imgsom").html();
-	$("#imgsom").html(s['img']);
+	$("#imgsom").html(s['file']);
 
-	let t = $("#imgsom").append(s['img']);
+	let t = $("#imgsom").append(s['file']);
 
 	som_gestor(soundoff);
 }
 
-function somdefundo(ultimosom)
+/*function somdefundo(ultimosom)
 {
 	
-}
+}*/
 
 

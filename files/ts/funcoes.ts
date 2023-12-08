@@ -6,7 +6,7 @@
 
 */
 
-function showerror(msg,time=4000)
+function showerror(msg:string,time=4000)
 {
 	if(antidouble)return;
 
