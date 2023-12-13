@@ -5,7 +5,7 @@
 	Funções Secundárias Não Relacionadas diretamente ao jogo.
 
 */
-
+/*
 function showerror(msg:string,time=4000)
 {
 	if(antidouble)return;
@@ -186,3 +186,4 @@ function vencedor_pagina()
 	$("#playerlosttimes").html(Player[lost]['jogadas'] )
 
 }
+*/

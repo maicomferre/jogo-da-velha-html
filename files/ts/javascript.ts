@@ -1,4 +1,4 @@
-
+/*
 var Player = {
 	0:{},
 	1:{}
@@ -6,7 +6,7 @@ var Player = {
 
 var jogador_atual = Boolean(Math.random() < 0.5);
 
-var player_color = [
+const player_color = [
 	"#EEAABB",
 	"#FFFFFF",
 ];
@@ -256,3 +256,4 @@ function calcular_score(tipo:string,num:number)
 
 	return scored;
 }
+*/

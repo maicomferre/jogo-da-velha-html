@@ -1,21 +1,118 @@
 
-var lista_som:string[] = [
-	"error",
-	"game_click",
-	"back_sound",
-	"inicio",
-	"velha",
-	"fimjogo",
+
+
+const folder_sound_effects:string[] = [
+	'files/sound/error.mp3',
+	'files/sound/game_click.mp3',
+	'files/sound/back_sound.mp3',
+	'files/sound/inicio.mp3',
+	'files/sound/velha.mp3',
+	'files/sound/fimjogo.mp3',
 ];
 
-var esom = {
-	'error':      {'file':'wrong-buzzer-6268.mp3'},
-	'game_click': {'file':'click-for-game-menu-131903.mp3'},
-	'back_sound': {'file':'merx-market-song-33936.mp3'},
-	'inicio':     {'file':'angelical-pad-143276.mp3'},
-	'velha':      {'file':'game-over-arcade-6435.mp3'},
-	"fimjogo":    {'file':'cinematic-intro-6097.mp3'},
+class Sound{
+    sound_element:HTMLAudioElement;
+    loaded:boolean = false;
+    paused:boolean = false;
+	started:boolean = false;
+    file_name:string | undefined;
+
+    constructor(sound_path:string)
+    {
+        this.sound_element = new Audio();
+        this.sound_element.src = sound_path;
+
+        this.sound_element.onload = ()=>{ this.loaded=true; };
+        this.sound_element.onerror = ()=>{ console.log(`[class Sound] Error loading audio ${sound_path}`); }
+		this.sound_element.loop = true;
+
+        this.file_name = sound_path.replace(/\..+$/, '').split('/').at(-1);
+    }
+
+    startOnInit(){
+        this.sound_element.currentTime = 0;
+        this.sound_element.play();
+        this.paused = false;
+		this.started = true;
+
+    }
+
+	disableloop(){
+		this.sound_element.loop = false;
+
+	}
+
+    pause(){
+        this.sound_element.play();
+        this.paused = true;
+    }
+    
+    reload(){
+        this.sound_element.currentTime = 0;
+        if(this.paused)
+        {
+            this.sound_element.play();
+            this.paused = false;
+        }
+    }
+
+    resume(){
+        this.sound_element.play();
+        this.paused = false;
+    }
+
+    set settime(time:number)
+    {
+        this.sound_element.currentTime = time;
+    }
+
+	get name()
+	{
+		return this.file_name;
+	}
+}
+
+
+class ControladorSom{
+    private sons:Sound[]=[];
+	private sons_name:string[]|undefined[] = [];
+
+    constructor(root_dir:string[]){
+        root_dir.forEach((value,index)=>{
+            this.sons[index] = new Sound(value);
+			this.sons_name[index] = this.sons[index].name;
+        });
+    }
+
+	iniciar(audio_nome:string)
+	{
+
+	}
+
+ 
 };
+
+const som = new ControladorSom(folder_sound_effects);
+
+
+/*
+const esom = {
+	'error':      'wrong-buzzer-6268.mp3',
+	'game_click': 'click-for-game-menu-131903.mp3',
+	'back_sound': 'merx-market-song-33936.mp3',
+	'inicio':     'angelical-pad-143276.mp3',
+	'velha':      'game-over-arcade-6435.mp3',
+	"fimjogo":    'cinematic-intro-6097.mp3',
+};
+
+interface sound{
+	path:string,
+	played:Boolean,
+	stopped:Boolean,
+	DOM:HTMLElement,
+};
+
+
 var images = {
 	'soundon':  { 'file': 'files/sondon.png' },
 	'soundoff': { 'file': 'files/sondoff.png'},
@@ -25,14 +122,17 @@ var images = {
 var som_pasta = "files/sound/";
 var estadosom = true;
 
+
 function sound_load()
 {
+	esom.forEach(element => {
+		
+	});
+
+
 	for(let x=0; x<lista_som.length; x++)
 	{
-		if(esom[lista_som[x]]['file'] == undefined)
-		{
-			console.log("error sound_load(): som[lista_som["+x+"]]['file'] is undefined");
-		}
+
 		esom[lista_som[x]]['loaded'] = false;
 
 		if(new window.Audio() === undefined)
@@ -42,7 +142,6 @@ function sound_load()
 		}
 
 		esom[lista_som[x]]['audio'] = new Audio();
-
 
 		esom[lista_som[x]]['audio'].onerror = function()
 		{
@@ -100,7 +199,7 @@ function som(sound:string, type:string,other?:any)
 			/*if(other !== 'loop')
 				esom[sound]['audio'].on('ended', function(){
 					esom[sound]['audio'].tocando = false;
-				});*/
+				});
 
 			break;
 		case 'cancelar':
@@ -117,7 +216,7 @@ function som(sound:string, type:string,other?:any)
 				esom[sound]['audio'].on('ended', function(){
 					esom[sound]['audio'].tocando = false;
 				});
-			*/
+			
 			break;
 		default:
 			console.log('som('+sound+','+type+'): switch = type inválido');
@@ -167,9 +266,5 @@ function alternarsom()
 	som_gestor(soundoff);
 }
 
-/*function somdefundo(ultimosom)
-{
-	
-}*/
 
-
+*/

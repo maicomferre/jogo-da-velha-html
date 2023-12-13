@@ -1,113 +1,68 @@
 "use strict";
-var lista_som = [
-    "error",
-    "game_click",
-    "back_sound",
-    "inicio",
-    "velha",
-    "fimjogo",
+const folder_sound_effects = [
+    'files/sound/error.mp3',
+    'files/sound/game_click.mp3',
+    'files/sound/back_sound.mp3',
+    'files/sound/inicio.mp3',
+    'files/sound/velha.mp3',
+    'files/sound/fimjogo.mp3',
 ];
-var esom = {
-    'error': { 'file': 'wrong-buzzer-6268.mp3' },
-    'game_click': { 'file': 'click-for-game-menu-131903.mp3' },
-    'back_sound': { 'file': 'merx-market-song-33936.mp3' },
-    'inicio': { 'file': 'angelical-pad-143276.mp3' },
-    'velha': { 'file': 'game-over-arcade-6435.mp3' },
-    "fimjogo": { 'file': 'cinematic-intro-6097.mp3' },
-};
-var images = {
-    'soundon': { 'file': 'files/sondon.png' },
-    'soundoff': { 'file': 'files/sondoff.png' },
-};
-var som_pasta = "files/sound/";
-var estadosom = true;
-function sound_load() {
-    for (let x = 0; x < lista_som.length; x++) {
-        if (esom[lista_som[x]]['file'] == undefined) {
-            console.log("error sound_load(): som[lista_som[" + x + "]]['file'] is undefined");
+class Sound {
+    sound_element;
+    loaded = false;
+    paused = false;
+    started = false;
+    file_name;
+    constructor(sound_path) {
+        this.sound_element = new Audio();
+        this.sound_element.src = sound_path;
+        this.sound_element.onload = () => { this.loaded = true; };
+        this.sound_element.onerror = () => { console.log(`[class Sound] Error loading audio ${sound_path}`); };
+        this.sound_element.loop = true;
+        this.file_name = sound_path.replace(/\..+$/, '').split('/').at(-1);
+    }
+    startOnInit() {
+        this.sound_element.currentTime = 0;
+        this.sound_element.play();
+        this.paused = false;
+        this.started = true;
+    }
+    disableloop() {
+        this.sound_element.loop = false;
+    }
+    pause() {
+        this.sound_element.play();
+        this.paused = true;
+    }
+    reload() {
+        this.sound_element.currentTime = 0;
+        if (this.paused) {
+            this.sound_element.play();
+            this.paused = false;
         }
-        esom[lista_som[x]]['loaded'] = false;
-        if (new window.Audio() === undefined) {
-            console.log("Error window.Audio(): Indefinido");
-            return false;
-        }
-        esom[lista_som[x]]['audio'] = new Audio();
-        esom[lista_som[x]]['audio'].onerror = function () {
-            console.log("error sound_load(): não foi possivel carregar o audio; ação: ignorando.");
-        };
-        esom[lista_som[x]]['audio'].onload = function () {
-            som[lista_som[x]]['loaded'] = true;
-            som[lista_som[x]]['loaded'].tocando = false;
-        };
-        esom[lista_som[x]]['audio'].src = som_pasta + esom[lista_som[x]]['file'];
-        esom[lista_som[x]]['audio'].currentTime = 0;
+    }
+    resume() {
+        this.sound_element.play();
+        this.paused = false;
+    }
+    set settime(time) {
+        this.sound_element.currentTime = time;
+    }
+    get name() {
+        return this.file_name;
     }
 }
-function som(sound, type, other) {
-    if (soundoff)
-        return false;
-    if (sound == 'todos') {
-        for (let x = 0; x < lista_som.length; x++) {
-            som(lista_som[x], type, other);
-        }
-        return false;
+class ControladorSom {
+    sons = [];
+    sons_name = [];
+    constructor(root_dir) {
+        root_dir.forEach((value, index) => {
+            this.sons[index] = new Sound(value);
+            this.sons_name[index] = this.sons[index].name;
+        });
     }
-    if (esom[sound] === undefined) {
-        console.log('som(' + sound + ',' + type + '): sound indefinido; Ação: cancelar.');
-        return false;
-    }
-    if (type != 'pausar' && type != 'iniciar' && type != 'cancelar' && type != 'reiniciar') {
-        console.log('som(' + sound + ',' + type + '): type inválido; Ação: cancelar.');
-        return false;
-    }
-    switch (type) {
-        case 'pausar':
-            esom[sound]['audio'].pause();
-            esom[sound]['audio'].tocando = false;
-            break;
-        case 'iniciar':
-            esom[sound]['audio'].play();
-            esom[sound]['audio'].tocando = true;
-            break;
-        case 'cancelar':
-            esom[sound]['audio'].pause();
-            esom[sound]['audio'].currentTime = 0;
-            esom[sound]['audio'].tocando = false;
-            break;
-        case 'reiniciar':
-            esom[sound]['audio'].currentTime = 0;
-            esom[sound]['audio'].play();
-            esom[sound]['audio'].tocando = true;
-            break;
-        default:
-            console.log('som(' + sound + ',' + type + '): switch = type inválido');
-    }
-    if (other == 'loop') {
-        esom[sound]['audio'].loop = true;
+    iniciar(audio_nome) {
     }
 }
-function som_gestor(acao) {
-    if (acao == false) {
-        for (let x = 0; x < lista_som.length; x++) {
-            if (esom[lista_som[x]]['audio'].tocando === true) {
-                tmp_gestor_som.push(lista_som[x]);
-            }
-        }
-        som('todos', 'pausar');
-        soundoff = true;
-    }
-    else if (acao == true) {
-        soundoff = false;
-        for (let x = 0; x < tmp_gestor_som.length; x++) {
-            som(tmp_gestor_som[x], 'iniciar');
-        }
-        tmp_gestor_som.splice(0);
-    }
-}
-function alternarsom() {
-    let s = (soundoff ? (images['soundon']) : (images['soundoff']));
-    $("#imgsom").html();
-    $("#imgsom").html(s['file']);
-    let t = $("#imgsom").append(s['file']);
-    som_gestor(soundoff);
-}
+;
+const som = new ControladorSom(folder_sound_effects);
