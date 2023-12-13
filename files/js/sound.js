@@ -19,7 +19,8 @@ class Sound {
         this.sound_element.onload = () => { this.loaded = true; };
         this.sound_element.onerror = () => { console.log(`[class Sound] Error loading audio ${sound_path}`); };
         this.sound_element.loop = true;
-        this.file_name = sound_path.replace(/\..+$/, '').split('/').at(-1);
+        this.file_name = sound_path.replace(/^.*[\\/]/, '');
+        this.file_name = this.file_name.substr(0, this.file_name.lastIndexOf('.')) || this.file_name;
     }
     startOnInit() {
         this.sound_element.currentTime = 0;
@@ -59,9 +60,30 @@ class ControladorSom {
         root_dir.forEach((value, index) => {
             this.sons[index] = new Sound(value);
             this.sons_name[index] = this.sons[index].name;
+            console.log(this.sons_name[index]);
         });
     }
-    iniciar(audio_nome) {
+    iniciar(audio_nome, PausarOutros = false) {
+        let index = this.sons_name.indexOf(audio_nome);
+        if (index == -1) {
+            console.log(`[class][ControladorSom]iniciar(${audio_nome}): invalid sound name.`);
+            return;
+        }
+        if (PausarOutros) {
+            this.sons.forEach(som => {
+                if (!som.paused && som.started)
+                    som.pause();
+            });
+        }
+        this.sons[index].startOnInit();
+    }
+    pausar(audio_nome) {
+        let index = this.sons_name.indexOf(audio_nome);
+        if (index == -1) {
+            console.log(`[class][ControladorSom]iniciar(${audio_nome}): invalid sound name.`);
+            return;
+        }
+        this.sons[index].pause();
     }
 }
 ;

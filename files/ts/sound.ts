@@ -1,4 +1,8 @@
-
+/*
+	@Arquivo: Responsável por Carregar e Gerenciar os Efeitos Sonoros;
+	@Descrição: Ao adicionar o caminho do arquivo em folder_sound_effects
+		torna possível executar o audio chamando-o pelo nome do arquivo;
+*/
 
 
 const folder_sound_effects:string[] = [
@@ -11,11 +15,11 @@ const folder_sound_effects:string[] = [
 ];
 
 class Sound{
-    sound_element:HTMLAudioElement;
-    loaded:boolean = false;
-    paused:boolean = false;
-	started:boolean = false;
-    file_name:string | undefined;
+    private sound_element:HTMLAudioElement;
+    public loaded:boolean = false;
+    public paused:boolean = false;
+	public started:boolean = false;
+    public file_name:string;
 
     constructor(sound_path:string)
     {
@@ -26,28 +30,27 @@ class Sound{
         this.sound_element.onerror = ()=>{ console.log(`[class Sound] Error loading audio ${sound_path}`); }
 		this.sound_element.loop = true;
 
-        this.file_name = sound_path.replace(/\..+$/, '').split('/').at(-1);
+        this.file_name = sound_path.replace(/^.*[\\/]/, '');
+		this.file_name = this.file_name.substr(0, this.file_name.lastIndexOf('.')) || this.file_name;
     }
 
-    startOnInit(){
+    public startOnInit():void{
         this.sound_element.currentTime = 0;
         this.sound_element.play();
         this.paused = false;
 		this.started = true;
-
     }
 
-	disableloop(){
+	public disableloop():void{
 		this.sound_element.loop = false;
-
 	}
 
-    pause(){
+    public pause():void{
         this.sound_element.play();
         this.paused = true;
     }
     
-    reload(){
+    public reload():void{
         this.sound_element.currentTime = 0;
         if(this.paused)
         {
@@ -56,17 +59,17 @@ class Sound{
         }
     }
 
-    resume(){
+    public resume():void{
         this.sound_element.play();
         this.paused = false;
     }
 
-    set settime(time:number)
+    public set settime(time:number)
     {
         this.sound_element.currentTime = time;
     }
 
-	get name()
+	public get name():string
 	{
 		return this.file_name;
 	}
@@ -75,21 +78,43 @@ class Sound{
 
 class ControladorSom{
     private sons:Sound[]=[];
-	private sons_name:string[]|undefined[] = [];
+	private sons_name:string[] = [];
 
     constructor(root_dir:string[]){
         root_dir.forEach((value,index)=>{
             this.sons[index] = new Sound(value);
 			this.sons_name[index] = this.sons[index].name;
+			console.log(this.sons_name[index]);
         });
     }
 
-	iniciar(audio_nome:string)
+	public iniciar(audio_nome:string,PausarOutros:boolean=false):void
 	{
+        let index:number = this.sons_name.indexOf(audio_nome);
+        if(index == -1){
+            console.log(`[class][ControladorSom]iniciar(${audio_nome}): invalid sound name.`);
+            return;
+        }
 
+		if(PausarOutros){
+			this.sons.forEach(som => {
+				if(!som.paused && som.started)
+					som.pause();
+			});
+		}
+
+		this.sons[index].startOnInit();
 	}
 
- 
+	public pausar(audio_nome:string)
+	{
+		let index:number = this.sons_name.indexOf(audio_nome);
+        if(index == -1){
+            console.log(`[class][ControladorSom]iniciar(${audio_nome}): invalid sound name.`);
+            return;
+        }
+		this.sons[index].pause();
+	}
 };
 
 const som = new ControladorSom(folder_sound_effects);
