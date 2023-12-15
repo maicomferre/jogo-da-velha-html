@@ -1,10 +1,60 @@
-/*
-var Player = {
-	0:{},
-	1:{}
-};
+
+class Player
+{
+	private jogadasNoTabuleiro:number=0;
+	private vezesPerdeu:number=0;
+	private xpscore:number=0;
+	private vezesVenceu:number=0;
+	public nome:string="";
+
+	public nomeJogador(nome:string):void
+	{
+		this.nome = nome;
+	}
+
+	public set venceu(xvenceu:number)
+	{
+		this.vezesVenceu = xvenceu;
+	}
+	public get venceu():number
+	{
+		return this.vezesVenceu;
+	}
+
+	public set score(score:number)
+	{
+		this.xpscore = score;
+	}
+	public get score():number
+	{
+		return this.xpscore;
+	}
+
+	public set perdeu(xperdeu:number)
+	{
+		this.vezesPerdeu += xperdeu;
+	}
+	public get perdeu():number
+	{
+		return this.vezesPerdeu;
+	}
+
+	public set jogadas(jogadas:number)
+	{
+		this.jogadasNoTabuleiro = jogadas;
+	}
+
+	public get jogadas()
+	{
+		return this.jogadasNoTabuleiro;
+	}
+}
+
+let jogador:Player[] = [new Player(), new Player()];
 
 var jogador_atual = Boolean(Math.random() < 0.5);
+
+const som = new ControladorSom(folder_sound_effects);
 
 const player_color = [
 	"#EEAABB",
@@ -17,7 +67,7 @@ var canvas:any;
 var playerinterval:number;
 var interval_control = false;
 var velha_selecionado:boolean[];
-var velha_game = {};
+var velha_game:string[][];
 var antidouble = false;
 var soundoff = false;
 var tmp_gestor_som:string[];
@@ -48,9 +98,7 @@ var canvas_posicao_click = [
 ];
 
 
-
 $(document).ready(function(){
-	sound_load();
 	image_load();
 	canvas = load_canvas();
 	write_game(canvas);
@@ -62,8 +110,7 @@ $(document).ready(function(){
 
 	$('#imgsom').on('click', function(){ alternarsom() });
 
-	som("inicio",'iniciar','loop');	
-
+	som.iniciar("inicio");
 });
 
 
@@ -124,7 +171,6 @@ function getCursorPosition(canvas:any, event:any) {
     checkClick(canvas.ctx,event.offsetX,event.offsetY);
 }
 
-
 function checkClick(canvas:HTMLObjectElement,x:number,y:number)
 {
 	for(let z=0; z<canvas_posicao_click.length; z++)
@@ -141,9 +187,9 @@ function checkClick(canvas:HTMLObjectElement,x:number,y:number)
 				let jat = jogador_atual_int(jogador_atual);
 				let outroj = jogador_atual_int(!jogador_atual);
 
-				Player[jat]['jogadas']++;
+				jogador[jat].jogadas++;
 
-				som('game_click','reiniciar');
+				som.iniciar('game_click');
 				
 				draw_option(jogador_atual,canvas,canvas_velha[z][0],canvas_velha[z][1]);
 				velha_selecionado[z] = true;
@@ -156,11 +202,11 @@ function checkClick(canvas:HTMLObjectElement,x:number,y:number)
 
 				if(verificar(velha_game) == true)
 				{
-					Player[jat]['venceu']++;
-					Player[jat]['score'] += calcular_score('ganhou',jat);
+					jogador[jat].venceu++;
+					jogador[jat].score += calcular_score('ganhou',jat);
 
-					Player[outroj]['perdeu']++;
-					Player[outroj]['score'] += calcular_score('perdeu',outroj);
+					jogador[outroj].perdeu++;
+					jogador[outroj].score += calcular_score('perdeu',outroj);
 
 					vencedor_pagina();
 				}
@@ -172,7 +218,7 @@ function checkClick(canvas:HTMLObjectElement,x:number,y:number)
 	}
 }
 
-function verificar(vg:any)
+function verificar(vg:string[][]):boolean
 {
 	//var vg = velha_game;
 
@@ -231,29 +277,23 @@ function obterPosicaoEmArray(x:number)
 	return {a,b};
 }
 
-function jogador_atual_int(ejogador_atual:boolean)
+function jogador_atual_int(ejogador_atual:boolean):number
 {
 	return (ejogador_atual ? 1 : 0);
 }
 
-function obterSimboloJogaodor(player:boolean)
+function obterSimboloJogaodor(player:boolean):string
 {
 	return player ? ("O") : ("X");
 }
 
-function calcular_score(tipo:string,num:number)
+function calcular_score(tipo:string,playerid:number):number
 {
-	let scored = 0;
-	let jogadaspossiveis = -5;
+	let scored = -5;
 	if(tipo == 'perdeu')
-	{
-		scored = parseInt(Player[num]['jogadas']) + jogadaspossiveis;		
-	}
+		scored += jogador[playerid].jogadas;	
 	else
-	{
-		scored = parseInt(Player[num]['jogadas']) - jogadaspossiveis;
-	}
+		scored -= jogador[playerid].jogadas;
 
 	return scored;
 }
-*/

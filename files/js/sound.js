@@ -52,6 +52,9 @@ class Sound {
     get name() {
         return this.file_name;
     }
+    get gettime() {
+        return this.sound_element.currentTime;
+    }
 }
 class ControladorSom {
     sons = [];
@@ -63,28 +66,59 @@ class ControladorSom {
             console.log(this.sons_name[index]);
         });
     }
-    iniciar(audio_nome, PausarOutros = false) {
-        let index = this.sons_name.indexOf(audio_nome);
+    iniciar(audio_nome, PausarOutros = true, doinicio = false) {
+        let index = this.getIdByName(audio_nome);
         if (index == -1) {
             console.log(`[class][ControladorSom]iniciar(${audio_nome}): invalid sound name.`);
             return;
         }
-        if (PausarOutros) {
-            this.sons.forEach(som => {
-                if (!som.paused && som.started)
-                    som.pause();
-            });
-        }
+        if (PausarOutros)
+            this.pausarTodos();
         this.sons[index].startOnInit();
     }
-    pausar(audio_nome) {
-        let index = this.sons_name.indexOf(audio_nome);
+    continuar(audio_nome) {
+        let index = this.getIdByName(audio_nome);
         if (index == -1) {
-            console.log(`[class][ControladorSom]iniciar(${audio_nome}): invalid sound name.`);
+            console.log(`[class][ControladorSom]continuar(${audio_nome}): invalid sound name.`);
+            return;
+        }
+    }
+    getIdByName(sound_name) {
+        return this.sons_name.indexOf(sound_name);
+    }
+    pausarTodos() {
+        this.sons.forEach(som => {
+            if (!som.paused && som.started && som.gettime != 0)
+                som.pause();
+        });
+    }
+    pausar(audio_nome) {
+        let index = this.getIdByName(audio_nome);
+        if (index == -1) {
+            console.log(`[class][ControladorSom]pausar(${audio_nome}): invalid sound name.`);
             return;
         }
         this.sons[index].pause();
     }
+    continuarTodos() {
+        this.sons.forEach(som => {
+            if (som.paused && som.started && som.gettime != 0)
+                som.resume();
+        });
+    }
 }
 ;
-const som = new ControladorSom(folder_sound_effects);
+var images = [
+    'files/sondoff.png',
+    'files/sondon.png'
+];
+var estadosom = true;
+class Gestor {
+}
+function alternarsom() {
+    let s = soundoff ? 1 : 0;
+    if (soundoff)
+        som.pausarTodos();
+    else
+        som.continuarTodos();
+}

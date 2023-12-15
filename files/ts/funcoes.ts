@@ -5,12 +5,12 @@
 	Funções Secundárias Não Relacionadas diretamente ao jogo.
 
 */
-/*
+
 function showerror(msg:string,time=4000)
 {
 	if(antidouble)return;
 
-	som('error','iniciar');
+	som.iniciar('error',false);
 	$("#errormessage").html(msg);
 	$("#errormessage").toggle('slow');
 	antidouble = true;
@@ -18,11 +18,11 @@ function showerror(msg:string,time=4000)
 	setTimeout(function(){
 		$("#errormessage").toggle('slow');	
 		antidouble=false;
-		som("error",'reiniciar');
+		som.iniciar("error",false);
 	},time);
 }
 
-
+/*
 function resetar(novamente=false)
 {
 	for(let x=0; x<3; x++)
@@ -37,8 +37,8 @@ function resetar(novamente=false)
 	write_game(canvas_context);
 
 
-	Player[0]['jogadas'] = 0;
-	Player[1]['jogadas'] = 0;
+	jogador[0]['jogadas'] = 0;
+	jogador[1]['jogadas'] = 0;
 
 	if(novamente)
 	{
@@ -50,7 +50,7 @@ function resetar(novamente=false)
 	}
 }
 
-
+*/
 function voltar_ao_menu()
 {
 	$('#opt1').toggle('slow');
@@ -105,22 +105,10 @@ function comecar()
 		showerror("Por favor, preencha no máximo 15 caracteres no segundo usuario.");
 		return false;
 	}		
-	som("inicio","pausar");	
+	som.pausar("inicio");	
 
-	Player[0] = {};
-	Player[0]['nome'] = player1;
-	Player[0]['score'] = 0;
-	Player[0]['venceu'] = 0;
-	Player[0]['perdeu'] = 0;
-	Player[0]['jogadas'] = 0;
-
-	Player[1] = {};
-	Player[1]['nome'] = player2;
-	Player[1]['score'] = 0;
-	Player[1]['venceu'] = 0;
-	Player[1]['perdeu'] = 0;
-	Player[1]['jogadas'] = 0;
-
+	jogador[0].nome = player1;
+	jogador[1].nome = player2;
 
 	$("#username0").text(player1)
 	$("#username1").text(player2);
@@ -129,10 +117,9 @@ function comecar()
 	$('#opt2').toggle('slow');
 
 	setTimeout(function(){
-		som('back_sound','iniciar');
-	},3000);
+		som.iniciar('back_sound');
+	},1000);
 }
-
 
 
 function image_load()
@@ -158,12 +145,9 @@ function image_load()
 	images['soundoff']['img'].src = images['soundoff']['file'];
 }
 
-
-
 function vencedor_pagina()
 {
-	som('todos',"pausar");
-	som('fimjogo',"reiniciar");
+	som.iniciar('fimjogo');
 	$('#opt3').show('slow');
 	$('#opt2').hide('fast');
 	$('#opt1').hide('fast');
@@ -172,18 +156,17 @@ function vencedor_pagina()
 	let lost = (jogador_atual) ? 0 : 1;
 
 
-	$('#playerwinname').html(Player[win]['nome']);
-	$('#playerwinname2').html(Player[win]['nome']);
-	$('#playerwinscore').html(Player[win]['score'] );
-	$('#playerwin').html(Player[win]['venceu'] );
-	$('#playerwinlost').html(Player[win]['perdeu'] );
-	$("#playerwintimes").html(Player[win]['jogadas'] )
+	$('#playerwinname').html(jogador[win].nome);
+	$('#playerwinname2').html(jogador[win].nome);
+	$('#playerwinscore').val(jogador[win].score );
+	$('#playerwin').val(jogador[win].venceu);
+	$('#playerwinlost').val(jogador[win].perdeu );
+	$("#playerwintimes").val(jogador[win].jogadas )
 
-	$('#playerlostname').html(Player[lost]['nome']);
-	$('#playerlostscore').html(Player[lost]['score'] );
-	$('#playerlostwin').html(Player[lost]['venceu'] );
-	$('#playerlostlost').html(Player[lost]['perdeu'] );
-	$("#playerlosttimes").html(Player[lost]['jogadas'] )
+	$('#playerlostname').html(jogador[lost].nome);
+	$('#playerlostscore').val(jogador[lost].score );
+	$('#playerlostwin').val(jogador[lost].venceu );
+	$('#playerlostlost').val(jogador[lost].perdeu );
+	$("#playerlosttimes").val(jogador[lost].jogadas )
 
 }
-*/

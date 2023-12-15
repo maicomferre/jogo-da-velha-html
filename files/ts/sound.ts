@@ -73,6 +73,11 @@ class Sound{
 	{
 		return this.file_name;
 	}
+
+	public get gettime():number
+	{
+		return this.sound_element.currentTime;
+	}
 }
 
 
@@ -88,208 +93,81 @@ class ControladorSom{
         });
     }
 
-	public iniciar(audio_nome:string,PausarOutros:boolean=false):void
-	{
-        let index:number = this.sons_name.indexOf(audio_nome);
+	public iniciar(audio_nome:string,PausarOutros:boolean=true,doinicio:boolean=false):void{
+        let index:number = this.getIdByName(audio_nome);
         if(index == -1){
             console.log(`[class][ControladorSom]iniciar(${audio_nome}): invalid sound name.`);
             return;
         }
 
-		if(PausarOutros){
-			this.sons.forEach(som => {
-				if(!som.paused && som.started)
-					som.pause();
-			});
-		}
+		if(PausarOutros)
+			this.pausarTodos();
 
 		this.sons[index].startOnInit();
 	}
 
+	public continuar(audio_nome:string):void{
+        let index:number = this.getIdByName(audio_nome);
+        if(index == -1){
+            console.log(`[class][ControladorSom]continuar(${audio_nome}): invalid sound name.`);
+            return;
+        }
+	}
+
+	private getIdByName(sound_name:string):number{
+		return this.sons_name.indexOf(sound_name);
+	}
+
+	public pausarTodos():void
+	{
+		this.sons.forEach(som => {
+			if(!som.paused && som.started && som.gettime != 0)
+				som.pause();
+		});
+	}
+
 	public pausar(audio_nome:string)
 	{
-		let index:number = this.sons_name.indexOf(audio_nome);
+        let index:number = this.getIdByName(audio_nome);
         if(index == -1){
-            console.log(`[class][ControladorSom]iniciar(${audio_nome}): invalid sound name.`);
+            console.log(`[class][ControladorSom]pausar(${audio_nome}): invalid sound name.`);
             return;
         }
 		this.sons[index].pause();
 	}
-};
 
-const som = new ControladorSom(folder_sound_effects);
-
-
-/*
-const esom = {
-	'error':      'wrong-buzzer-6268.mp3',
-	'game_click': 'click-for-game-menu-131903.mp3',
-	'back_sound': 'merx-market-song-33936.mp3',
-	'inicio':     'angelical-pad-143276.mp3',
-	'velha':      'game-over-arcade-6435.mp3',
-	"fimjogo":    'cinematic-intro-6097.mp3',
-};
-
-interface sound{
-	path:string,
-	played:Boolean,
-	stopped:Boolean,
-	DOM:HTMLElement,
+	public continuarTodos():void
+	{
+		this.sons.forEach(som => {
+			if(som.paused && som.started && som.gettime != 0)
+				som.resume();
+		});
+	}
 };
 
 
-var images = {
-	'soundon':  { 'file': 'files/sondon.png' },
-	'soundoff': { 'file': 'files/sondoff.png'},
-};
+var images:string[] =[ 
+	'files/sondoff.png',
+	'files/sondon.png'
+];
 
-//Efeitos Sonoros
-var som_pasta = "files/sound/";
 var estadosom = true;
 
-
-function sound_load()
+class Gestor
 {
-	esom.forEach(element => {
-		
-	});
-
-
-	for(let x=0; x<lista_som.length; x++)
-	{
-
-		esom[lista_som[x]]['loaded'] = false;
-
-		if(new window.Audio() === undefined)
-		{
-			console.log("Error window.Audio(): Indefinido");
-			return false;
-		}
-
-		esom[lista_som[x]]['audio'] = new Audio();
-
-		esom[lista_som[x]]['audio'].onerror = function()
-		{
-			console.log("error sound_load(): não foi possivel carregar o audio; ação: ignorando.");
-		}
-
-
-		esom[lista_som[x]]['audio'].onload = function()
-		{
-			som[lista_som[x]]['loaded'] = true;
-			som[lista_som[x]]['loaded'].tocando = false;
-
-		}
-
-		esom[lista_som[x]]['audio'].src = som_pasta + esom[lista_som[x]]['file'];
-		esom[lista_som[x]]['audio'].currentTime = 0;
-	
-	}
-}
-
-function som(sound:string, type:string,other?:any)
-{
-	if(soundoff)return false;
-	if(sound == 'todos')
-	{
-		for(let x=0; x<lista_som.length; x++)
-		{
-			som(lista_som[x],type,other);
-		}
-		return false;
-	}
-	if(esom[sound] === undefined)
-	{
-		console.log('som('+sound+','+type+'): sound indefinido; Ação: cancelar.');
-		return false;
-	}
-	
-	if(type != 'pausar' && type != 'iniciar' && type != 'cancelar' && type != 'reiniciar')
-	{
-		console.log('som('+sound+','+type+'): type inválido; Ação: cancelar.');
-		return false;
-	}
-	
-
-	switch(type)
-	{
-		case 'pausar':
-			esom[sound]['audio'].pause();
-			esom[sound]['audio'].tocando = false;			
-			break;
-		case 'iniciar':
-			esom[sound]['audio'].play();
-			esom[sound]['audio'].tocando = true;
-
-			/*if(other !== 'loop')
-				esom[sound]['audio'].on('ended', function(){
-					esom[sound]['audio'].tocando = false;
-				});
-
-			break;
-		case 'cancelar':
-			esom[sound]['audio'].pause();
-			esom[sound]['audio'].currentTime = 0;
-			esom[sound]['audio'].tocando = false;			
-			break;
-		case 'reiniciar':
-			esom[sound]['audio'].currentTime = 0;
-			esom[sound]['audio'].play();
-			esom[sound]['audio'].tocando = true;
-
-			/*if(other !== 'loop')
-				esom[sound]['audio'].on('ended', function(){
-					esom[sound]['audio'].tocando = false;
-				});
-			
-			break;
-		default:
-			console.log('som('+sound+','+type+'): switch = type inválido');
-	}
-
-	if(other == 'loop')
-	{
-		esom[sound]['audio'].loop = true;
-	}
 
 }
 
-function som_gestor(acao:boolean)
+function alternarsom():void
 {
-	if(acao == false)
-	{
-		for(let x=0; x < lista_som.length; x++)
-		{
-			if(esom[lista_som[x]]['audio'].tocando === true)
-			{
-				tmp_gestor_som.push(lista_som[x]);
-			}
-		}
-		som('todos','pausar');
-		soundoff = true;
+	let s = soundoff ? 1 : 0 ;
+	//$("#imgsom").html();
+	//$("#imgsom").html(images[s]);
 
-	}
-	else if(acao == true)
-	{
-		soundoff = false;		
-		for(let x=0; x < tmp_gestor_som.length; x++)
-		{
-			som(tmp_gestor_som[x],'iniciar');
-		}
-		tmp_gestor_som.splice(0);
-	}
+	//let t = $("#imgsom").append(s['file']);
+
+	if(soundoff)
+		som.pausarTodos();
+	else
+		som.continuarTodos();
 }
-
-function alternarsom()
-{
-	let s = (soundoff ? (images['soundon']) : (images['soundoff']));
-	$("#imgsom").html();
-	$("#imgsom").html(s['file']);
-
-	let t = $("#imgsom").append(s['file']);
-
-	som_gestor(soundoff);
-}
-
-
-*/
