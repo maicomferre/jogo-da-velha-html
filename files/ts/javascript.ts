@@ -149,7 +149,7 @@ function write_game(context:any)
 	init_playercolor()
 }
 
-function draw_option(type:boolean,cx:any,x:number,y:number)
+function draw_option(type:boolean,cx:any,x:number,y:number):void
 {
 	cx.beginPath();
 	if(type)
@@ -214,11 +214,8 @@ function checkClick(canvas:HTMLObjectElement,x:number,y:number)
 
 function verificar(vg:string[][]):boolean
 {
-	//var vg = velha_game;
-
 	for(var x=0; x < 3; x++)
 	{
-		//console.log("x=" + x + ' ' +  velha_game[x][0] + '   |   '+velha_game[x][1]+'   |   '+velha_game[x][2]);
 		if(vg[0][x] != " ")
 		{
 			if(vg[0][x] === vg[1][x] && vg[1][x] === vg[2][x])return true;
@@ -230,14 +227,11 @@ function verificar(vg:string[][]):boolean
 
 		if(vg[1][1] != " ")
 		{
-			//if(vg[0][1] === vg[1][1] && vg[1][1] === vg[2][1])return true;//No meio
-
 			if(vg[0][0] === vg[1][1] && vg[1][1] === vg[2][2])return true;//Cruzado \
 
 			if(vg[2][0] === vg[1][1] && vg[1][1] === vg[0][2])return true;//Cruzado /
 		}
 	}
-
 
 	return false;
 }
@@ -259,7 +253,7 @@ function obterPosicaoEmArray(x:number)
 	else if(x <= 8)
 		a = 2;
 	else
-		console.log("getpos(x="+x+"): Erro x invalido");
+		console.log(`obterPosicaoEmArray(x="${x}"): Erro x invalido`);
 
 	b=x;
 

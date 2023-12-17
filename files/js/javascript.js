@@ -173,7 +173,7 @@ function obterPosicaoEmArray(x) {
     else if (x <= 8)
         a = 2;
     else
-        console.log("getpos(x=" + x + "): Erro x invalido");
+        console.log(`obterPosicaoEmArray(x="${x}"): Erro x invalido`);
     b = x;
     if (a == 1)
         b = b - 3;
