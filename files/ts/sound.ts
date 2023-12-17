@@ -93,7 +93,7 @@ class ControladorSom{
         });
     }
 
-	public iniciar(audio_nome:string,PausarOutros:boolean=true,desativarLoop=false,doinicio:boolean=false):void{
+	public iniciar(audio_nome:string,PausarOutros:boolean=true,desativarLoop=false):void{
 		if(!this.estadosom)return;
         let index:number = this.getIdByName(audio_nome);
         if(index == -1){

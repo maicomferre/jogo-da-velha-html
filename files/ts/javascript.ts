@@ -188,7 +188,7 @@ function checkClick(canvas:HTMLObjectElement,x:number,y:number)
 
 				jogador[jat].jogadas++;
 
-				som.iniciar('game_click',false,true,true);
+				som.iniciar('game_click',false,true);
 				
 				draw_option(jogador_atual,canvas,canvas_velha[z][0],canvas_velha[z][1]);
 

@@ -66,7 +66,7 @@ class ControladorSom {
             this.sons_name[index] = this.sons[index].name;
         });
     }
-    iniciar(audio_nome, PausarOutros = true, desativarLoop = false, doinicio = false) {
+    iniciar(audio_nome, PausarOutros = true, desativarLoop = false) {
         if (!this.estadosom)
             return;
         let index = this.getIdByName(audio_nome);

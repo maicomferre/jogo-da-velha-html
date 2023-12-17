@@ -79,7 +79,7 @@ function comecar() {
     return true;
 }
 function vencedor_pagina() {
-    som.iniciar('fimjogo', true, true, true);
+    som.iniciar('fimjogo', true, true);
     $('#opt3').show('slow');
     $('#opt2').hide('fast');
     $('#opt1').hide('fast');

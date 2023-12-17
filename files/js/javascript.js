@@ -129,7 +129,7 @@ function checkClick(canvas, x, y) {
                 let jat = jogador_atual_int(jogador_atual);
                 let outroj = jogador_atual_int(!jogador_atual);
                 jogador[jat].jogadas++;
-                som.iniciar('game_click', false, true, true);
+                som.iniciar('game_click', false, true);
                 draw_option(jogador_atual, canvas, canvas_velha[z][0], canvas_velha[z][1]);
                 velha_game[w.a][w.b] = obterSimboloJogaodor(jogador_atual);
                 if (verificar(velha_game) == true) {
