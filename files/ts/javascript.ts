@@ -1,54 +1,75 @@
-var lista_som = [
-	"error",
-	"game_click",
-	"back_sound",
-	"inicio",
-	"velha",
-	"fimjogo",
-];
 
-var Player = [0,1];
+class Player
+{
+	private jogadasNoTabuleiro:number=0;
+	private vezesPerdeu:number=0;
+	private xpscore:number=0;
+	private vezesVenceu:number=0;
+	public nome:string="";
 
+	public nomeJogador(nome:string):void
+	{
+		this.nome = nome;
+	}
 
-//Efeitos Sonoros
-var som_pasta = "files/sound/";
-var estadosom = true;
+	public set venceu(xvenceu:number)
+	{
+		this.vezesVenceu = xvenceu;
+	}
+	public get venceu():number
+	{
+		return this.vezesVenceu;
+	}
 
+	public set score(score:number)
+	{
+		this.xpscore = score;
+	}
+	public get score():number
+	{
+		return this.xpscore;
+	}
 
-var images = {
-	'soundon':  { 'file': 'files/sondon.png' },
-	'soundoff': { 'file': 'files/sondoff.png'},
-};
+	public set perdeu(xperdeu:number)
+	{
+		this.vezesPerdeu += xperdeu;
+	}
+	public get perdeu():number
+	{
+		return this.vezesPerdeu;
+	}
 
-var esom = {
-	'error':      {'file':'wrong-buzzer-6268.mp3'},
-	'game_click': {'file':'click-for-game-menu-131903.mp3'},
-	'back_sound': {'file':'merx-market-song-33936.mp3'},
-	'inicio':     {'file':'angelical-pad-143276.mp3'},
-	'velha':      {'file':'game-over-arcade-6435.mp3'},
-	"fimjogo":    {'file':'cinematic-intro-6097.mp3'},
-};
+	public set jogadas(jogadas:number)
+	{
+		this.jogadasNoTabuleiro = jogadas;
+	}
 
+	public get jogadas()
+	{
+		return this.jogadasNoTabuleiro;
+	}
+}
+
+let jogador:Player[] = [new Player(), new Player()];
 
 var jogador_atual = Boolean(Math.random() < 0.5);
 
+const som = new ControladorSom(folder_sound_effects);
 
-//Editaveis
-var player_color = [
+const player_color = [
 	"#EEAABB",
 	"#FFFFFF",
 ];
 
 //Config
-canvas_context = undefined;
-var canvas = undefined;
-var playerinterval = null;
+var canvas_context:any;
+var canvas:any;
+var playerinterval:number;
 var interval_control = false;
-var velha_selecionado = [];
-var velha_game = {};
+var velha_game:string[][];
 var antidouble = false;
 var soundoff = false;
-var tmp_gestor_som = [];
+var tmp_gestor_som:string[];
 
 velha_game = [
 	[' ', ' ', ' '],
@@ -76,10 +97,7 @@ var canvas_posicao_click = [
 ];
 
 
-
 $(document).ready(function(){
-	sound_load();
-	image_load();
 	canvas = load_canvas();
 	write_game(canvas);
 	canvas_context = canvas;
@@ -90,15 +108,14 @@ $(document).ready(function(){
 
 	$('#imgsom').on('click', function(){ alternarsom() });
 
-	som_controlador1 = som("inicio",'iniciar','loop');	
-
+	som.iniciar("inicio");
 });
 
 
 
 function load_canvas()
 {
-	var canvas = document.getElementById('game');
+	canvas = document.getElementById('game');
 
 	if(canvas.getContext == false)
 	{
@@ -109,7 +126,7 @@ function load_canvas()
 
 	return {ctx,canvas};
 }
-function write_game(context)
+function write_game(context:any)
 {
 	let cx = context.ctx;
 
@@ -132,7 +149,7 @@ function write_game(context)
 	init_playercolor()
 }
 
-function draw_option(type,cx,x,y)
+function draw_option(type:boolean,cx:any,x:number,y:number):void
 {
 	cx.beginPath();
 	if(type)
@@ -148,12 +165,11 @@ function draw_option(type,cx,x,y)
 }
 
 
-function getCursorPosition(canvas, event) {
+function getCursorPosition(canvas:any, event:any) {
     checkClick(canvas.ctx,event.offsetX,event.offsetY);
 }
 
-
-function checkClick(canvas,x,y)
+function checkClick(canvas:HTMLObjectElement,x:number,y:number)
 {
 	for(let z=0; z<canvas_posicao_click.length; z++)
 	{
@@ -164,36 +180,30 @@ function checkClick(canvas,x,y)
 
 		if (x>xin && y>yin && x < xout && y < yout)
 		{
-			if(!velha_selecionado[z])
+			let w = obterPosicaoEmArray(z);
+			if(velha_game[w.a][w.b] === ' ')
 			{
-				let  jat = jogador_atual_int(jogador_atual);
+				let jat = jogador_atual_int(jogador_atual);
 				let outroj = jogador_atual_int(!jogador_atual);
 
-				Player[jat]['jogadas']++;
+				jogador[jat].jogadas++;
 
-				som('game_click','reiniciar');
+				som.iniciar('game_click',false,true);
 				
 				draw_option(jogador_atual,canvas,canvas_velha[z][0],canvas_velha[z][1]);
-				velha_selecionado[z] = true;
-
-
-				w = obterPosicaoEmArray(z);
 
 				velha_game[w.a][w.b] = obterSimboloJogaodor(jogador_atual);
-				//console.log("x = "+w.a+'  |  y='+w.b);
 
 				if(verificar(velha_game) == true)
 				{
-					Player[jat]['venceu']++;
-					Player[jat]['score'] += calcular_score('ganhou',jat);
+					jogador[jat].venceu++;
+					jogador[jat].score += calcular_score('ganhou',jat);
 
-					Player[outroj]['perdeu']++;
-					Player[outroj]['score'] += calcular_score('perdeu',outroj);
+					jogador[outroj].perdeu++;
+					jogador[outroj].score += calcular_score('perdeu',outroj);
 
 					vencedor_pagina();
-
 				}
-
 
 				jogador_atual = !jogador_atual;
 				init_playercolor();
@@ -202,14 +212,10 @@ function checkClick(canvas,x,y)
 	}
 }
 
-function verificar(vg)
+function verificar(vg:string[][]):boolean
 {
-
-	var vg = velha_game;
-
 	for(var x=0; x < 3; x++)
 	{
-		//console.log("x=" + x + ' ' +  velha_game[x][0] + '   |   '+velha_game[x][1]+'   |   '+velha_game[x][2]);
 		if(vg[0][x] != " ")
 		{
 			if(vg[0][x] === vg[1][x] && vg[1][x] === vg[2][x])return true;
@@ -221,36 +227,33 @@ function verificar(vg)
 
 		if(vg[1][1] != " ")
 		{
-			//if(vg[0][1] === vg[1][1] && vg[1][1] === vg[2][1])return true;//No meio
-
 			if(vg[0][0] === vg[1][1] && vg[1][1] === vg[2][2])return true;//Cruzado \
 
 			if(vg[2][0] === vg[1][1] && vg[1][1] === vg[0][2])return true;//Cruzado /
 		}
 	}
 
-
 	return false;
 }
 
 
-function obterPosicaoEmArray(x)
+function obterPosicaoEmArray(x:number)
 {			
 	// ---- 0     1     2 <<  
 	// 0  | 0  |  1 |  2 |
 	// 1  | 3  |  4 |  5 |
 	// 2  | 6  |  7 |  8 |
 
-	let a, b;
+	let a:number=-1, b:number=-1;
 
 	if(x <= 2)
-		a = 0 ;
+		a = 0;
 	else if(x <= 5)
 		a = 1;
 	else if(x <= 8)
 		a = 2;
 	else
-		console.log("getpos(x="+x+"): Erro x invalido");
+		console.log(`obterPosicaoEmArray(x="${x}"): Erro x invalido`);
 
 	b=x;
 
@@ -262,28 +265,23 @@ function obterPosicaoEmArray(x)
 	return {a,b};
 }
 
-function jogador_atual_int(ejogador_atual)
+function jogador_atual_int(ejogador_atual:boolean):number
 {
 	return (ejogador_atual ? 1 : 0);
 }
 
-function obterSimboloJogaodor(player)
+function obterSimboloJogaodor(player:boolean):string
 {
 	return player ? ("O") : ("X");
 }
 
-function calcular_score(tipo,num)
+function calcular_score(tipo:string,playerid:number):number
 {
-	let scored = 0;
-	let jogadaspossiveis = -5;
+	let scored = -5;
 	if(tipo == 'perdeu')
-	{
-		scored = parseInt(Player[num]['jogadas']) + jogadaspossiveis;		
-	}
+		scored += jogador[playerid].jogadas;	
 	else
-	{
-		scored = parseInt(Player[num]['jogadas']) - jogadaspossiveis;
-	}
+		scored -= jogador[playerid].jogadas;
 
 	return scored;
 }
