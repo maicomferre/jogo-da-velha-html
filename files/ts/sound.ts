@@ -102,14 +102,10 @@ class ControladorSom{
         }
 
 		if(desativarLoop)
-		{
 			this.sons[index].disableloop();
-		}
 
-		if(PausarOutros === true){
+		if(PausarOutros === true)
 			this.pausarTodos();
-			console.log("pauisar todos");
-		}
 
 		this.sons[index].startOnInit();
 	}
@@ -130,9 +126,8 @@ class ControladorSom{
 	public pausarTodos():void
 	{
 		this.sons.forEach(som => {
-			if(!som.paused && som.started){
+			if(!som.paused && som.started)
 				som.pause();
-			}
 		});
 	}
 
@@ -161,8 +156,7 @@ class ControladorSom{
 	}
 	public ativarSom():void
 	{
-		if(!this.estadosom)
-		{
+		if(!this.estadosom){
 			this.estadosom = true;
 			this.continuarTodos();
 		}

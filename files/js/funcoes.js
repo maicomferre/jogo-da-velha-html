@@ -11,6 +11,21 @@ function showerror(msg, time = 4000) {
         antidouble = false;
     }, time);
 }
+function resetar(novamente = false) {
+    for (let x = 0; x < 3; x++)
+        for (let y = 0; y < 3; y++)
+            velha_game[x][y] = ' ';
+    canvas_context.ctx.clearRect(0, 0, canvas_context.canvas.width, canvas_context.canvas.height);
+    write_game(canvas_context);
+    jogador[0]['jogadas'] = 0;
+    jogador[1]['jogadas'] = 0;
+    if (novamente) {
+        som.iniciar("back_sound");
+        $('#opt3').hide('slow');
+        $('#opt2').show('fast');
+        $('#opt1').hide();
+    }
+}
 function voltar_ao_menu() {
     $('#opt1').toggle('slow');
     $('#opt2').toggle('slow');
@@ -59,7 +74,7 @@ function comecar() {
     }, 1000);
 }
 function vencedor_pagina() {
-    som.iniciar('fimjogo');
+    som.iniciar('fimjogo', true, true, true);
     $('#opt3').show('slow');
     $('#opt2').hide('fast');
     $('#opt1').hide('fast');

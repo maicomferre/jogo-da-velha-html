@@ -74,13 +74,10 @@ class ControladorSom {
             console.log(`[class][ControladorSom]iniciar(${audio_nome}): invalid sound name.`);
             return;
         }
-        if (desativarLoop) {
+        if (desativarLoop)
             this.sons[index].disableloop();
-        }
-        if (PausarOutros === true) {
+        if (PausarOutros === true)
             this.pausarTodos();
-            console.log("pauisar todos");
-        }
         this.sons[index].startOnInit();
     }
     continuar(audio_nome) {
@@ -97,9 +94,8 @@ class ControladorSom {
     }
     pausarTodos() {
         this.sons.forEach(som => {
-            if (!som.paused && som.started) {
+            if (!som.paused && som.started)
                 som.pause();
-            }
         });
     }
     pausar(audio_nome) {

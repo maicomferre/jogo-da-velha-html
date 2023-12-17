@@ -66,7 +66,6 @@ var canvas_context:any;
 var canvas:any;
 var playerinterval:number;
 var interval_control = false;
-var velha_selecionado:boolean[];
 var velha_game:string[][];
 var antidouble = false;
 var soundoff = false;
@@ -181,23 +180,19 @@ function checkClick(canvas:HTMLObjectElement,x:number,y:number)
 
 		if (x>xin && y>yin && x < xout && y < yout)
 		{
-			if(!velha_selecionado[z])
+			let w = obterPosicaoEmArray(z);
+			if(velha_game[w.a][w.b] === ' ')
 			{
 				let jat = jogador_atual_int(jogador_atual);
 				let outroj = jogador_atual_int(!jogador_atual);
 
 				jogador[jat].jogadas++;
 
-				som.iniciar('game_click');
+				som.iniciar('game_click',false,true,true);
 				
 				draw_option(jogador_atual,canvas,canvas_velha[z][0],canvas_velha[z][1]);
-				velha_selecionado[z] = true;
-
-
-				let w = obterPosicaoEmArray(z);
 
 				velha_game[w.a][w.b] = obterSimboloJogaodor(jogador_atual);
-				//console.log("x = "+w.a+'  |  y='+w.b);
 
 				if(verificar(velha_game) == true)
 				{
