@@ -122,7 +122,6 @@ function comecar():boolean
 	return true;
 }
 
-
 function vencedor_pagina()
 {
 	som.iniciar('fimjogo',true,true,true);
@@ -130,21 +129,23 @@ function vencedor_pagina()
 	$('#opt2').hide('fast');
 	$('#opt1').hide('fast');
 
-	let win = (jogador_atual) ? 1 : 0;
-	let lost = (jogador_atual) ? 0 : 1;
+	const status = ['Vencedor','Perdedor'];
+
+	$("#player_status1").html(status[jogador_atual_int(!jogador_atual)]);
+	$("#player_status2").html(status[jogador_atual_int(jogador_atual)]);
 
 
-	$('#playerwinname').html(jogador[win].nome);
-	$('#playerwinname2').html(jogador[win].nome);
-	$('#playerwinscore').val(jogador[win].score );
-	$('#playerwin').val(jogador[win].venceu);
-	$('#playerwinlost').val(jogador[win].perdeu );
-	$("#playerwintimes").val(jogador[win].jogadas )
+	$('#playerwinname').html(jogador[0].nome);
+	$('#playerwinname2').html(jogador[0].nome);
+	$('#playerwinscore').html(jogador[0].score.toString() );
+	$('#playerwin').html(jogador[0].venceu.toString());
+	$('#playerwinlost').html(jogador[0].perdeu.toString() );
+	$("#playerwintimes").html(jogador[0].jogadas.toString() );
 
-	$('#playerlostname').html(jogador[lost].nome);
-	$('#playerlostscore').val(jogador[lost].score );
-	$('#playerlostwin').val(jogador[lost].venceu );
-	$('#playerlostlost').val(jogador[lost].perdeu );
-	$("#playerlosttimes").val(jogador[lost].jogadas )
+	$('#playerlostname').html(jogador[1].nome);
+	$('#playerlostscore').html(jogador[1].score.toString() );
+	$('#playerlostwin').html(jogador[1].venceu.toString() );
+	$('#playerlostlost').html(jogador[1].perdeu.toString() );
+	$("#playerlosttimes").html(jogador[1].jogadas.toString() );
 
 }
