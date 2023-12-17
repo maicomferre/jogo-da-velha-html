@@ -64,6 +64,10 @@ function comecar() {
         showerror("Por favor, preencha no máximo 15 caracteres no segundo usuario.");
         return false;
     }
+    if (jogador[1].nome.toLowerCase() === jogador[0].nome.toLowerCase()) {
+        showerror("O nome dos jogadores não pode ser igual");
+        return false;
+    }
     som.pausar("inicio");
     $("#username0").text(jogador[0].nome);
     $("#username1").text(jogador[1].nome);
@@ -72,6 +76,7 @@ function comecar() {
     setTimeout(function () {
         som.iniciar('back_sound');
     }, 1000);
+    return true;
 }
 function vencedor_pagina() {
     som.iniciar('fimjogo', true, true, true);

@@ -5,7 +5,7 @@
 	Funções Secundárias Não Relacionadas diretamente ao jogo.
 
 */
-function showerror(msg:string,time=4000)
+function showerror(msg:string,time=4000):void
 {
 	if(antidouble)return;
 
@@ -20,7 +20,7 @@ function showerror(msg:string,time=4000)
 	},time);
 }
 
-function resetar(novamente=false)
+function resetar(novamente=false):void
 {
 	for(let x=0; x<3; x++)
 		for(let y=0; y<3; y++)
@@ -70,7 +70,7 @@ function init_playercolor()
 }
 
 
-function comecar()
+function comecar():boolean
 {	
 	let value = document.getElementById('player1') as HTMLInputElement;
 	jogador[0].nome = value.value;
@@ -98,7 +98,15 @@ function comecar()
 	{
 		showerror("Por favor, preencha no máximo 15 caracteres no segundo usuario.");
 		return false;
-	}		
+	}
+
+	if(jogador[1].nome.toLowerCase() === jogador[0].nome.toLowerCase() )
+	{
+		showerror("O nome dos jogadores não pode ser igual");
+		return false;
+	}
+
+
 	som.pausar("inicio");	
 
 	$("#username0").text(jogador[0].nome)
@@ -110,6 +118,8 @@ function comecar()
 	setTimeout(function(){
 		som.iniciar('back_sound');
 	},1000);
+
+	return true;
 }
 
 
