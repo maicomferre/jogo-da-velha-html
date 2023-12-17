@@ -59,24 +59,33 @@ class Sound {
 class ControladorSom {
     sons = [];
     sons_name = [];
+    estadosom = true;
     constructor(root_dir) {
         root_dir.forEach((value, index) => {
             this.sons[index] = new Sound(value);
             this.sons_name[index] = this.sons[index].name;
-            console.log(this.sons_name[index]);
         });
     }
-    iniciar(audio_nome, PausarOutros = true, doinicio = false) {
+    iniciar(audio_nome, PausarOutros = true, desativarLoop = false, doinicio = false) {
+        if (!this.estadosom)
+            return;
         let index = this.getIdByName(audio_nome);
         if (index == -1) {
             console.log(`[class][ControladorSom]iniciar(${audio_nome}): invalid sound name.`);
             return;
         }
-        if (PausarOutros)
+        if (desativarLoop) {
+            this.sons[index].disableloop();
+        }
+        if (PausarOutros === true) {
             this.pausarTodos();
+            console.log("pauisar todos");
+        }
         this.sons[index].startOnInit();
     }
     continuar(audio_nome) {
+        if (!this.estadosom)
+            return;
         let index = this.getIdByName(audio_nome);
         if (index == -1) {
             console.log(`[class][ControladorSom]continuar(${audio_nome}): invalid sound name.`);
@@ -88,8 +97,9 @@ class ControladorSom {
     }
     pausarTodos() {
         this.sons.forEach(som => {
-            if (!som.paused && som.started && som.gettime != 0)
+            if (!som.paused && som.started) {
                 som.pause();
+            }
         });
     }
     pausar(audio_nome) {
@@ -106,19 +116,15 @@ class ControladorSom {
                 som.resume();
         });
     }
+    desativarSom() {
+        this.estadosom = false;
+        this.pausarTodos();
+    }
+    ativarSom() {
+        if (!this.estadosom) {
+            this.estadosom = true;
+            this.continuarTodos();
+        }
+    }
 }
 ;
-var images = [
-    'files/sondoff.png',
-    'files/sondon.png'
-];
-var estadosom = true;
-class Gestor {
-}
-function alternarsom() {
-    let s = soundoff ? 1 : 0;
-    if (soundoff)
-        som.pausarTodos();
-    else
-        som.continuarTodos();
-}

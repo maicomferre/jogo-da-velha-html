@@ -5,12 +5,11 @@
 	Funções Secundárias Não Relacionadas diretamente ao jogo.
 
 */
-
 function showerror(msg:string,time=4000)
 {
 	if(antidouble)return;
 
-	som.iniciar('error',false);
+	som.iniciar('error',false,true);
 	$("#errormessage").html(msg);
 	$("#errormessage").toggle('slow');
 	antidouble = true;
@@ -18,7 +17,6 @@ function showerror(msg:string,time=4000)
 	setTimeout(function(){
 		$("#errormessage").toggle('slow');	
 		antidouble=false;
-		som.iniciar("error",false);
 	},time);
 }
 
@@ -81,37 +79,37 @@ function init_playercolor()
 
 function comecar()
 {	
-	let player1:any = $('#player1').val;
-	let player2:any = $('#player2').val;
+	let value = document.getElementById('player1') as HTMLInputElement;
+	jogador[0].nome = value.value;
+	
+	value = document.getElementById('player2') as HTMLInputElement;
+	jogador[1].nome = value.value;
 
-	if(player1.length < 3)
+	if(jogador[0].nome.length < 3)
 	{
 		showerror("Por favor, preencha pelo menos 3 caracteres no primeiro usuario.");
 		return false;
 	}
-	if(player2.length < 3)
+	if(jogador[1].nome.length < 3)
 	{
 		showerror("Por favor, preencha pelo menos 3 caracteres no segundo usuario.");
 		return false;
 	}	
 
-	if(player1.length > 15)
+	if(jogador[0].nome.length > 15)
 	{
 		showerror("Por favor, preencha no máximo 15 caracteres no primeiro usuario.");
 		return false;
 	}
-	if(player2.length > 15)
+	if(jogador[1].nome.length > 15)
 	{
 		showerror("Por favor, preencha no máximo 15 caracteres no segundo usuario.");
 		return false;
 	}		
 	som.pausar("inicio");	
 
-	jogador[0].nome = player1;
-	jogador[1].nome = player2;
-
-	$("#username0").text(player1)
-	$("#username1").text(player2);
+	$("#username0").text(jogador[0].nome)
+	$("#username1").text(jogador[1].nome);
 
 	$('#opt1').toggle('slow');
 	$('#opt2').toggle('slow');
@@ -121,29 +119,6 @@ function comecar()
 	},1000);
 }
 
-
-function image_load()
-{
-	images['soundon']['img'] = new Image();
-
-	images['soundon']['img'].onerror = function()
-	{
-		console.log("error image_load(): não foi possível carregar imagem; ação: ignorar");
-	}
-
-	images['soundon']['img'].src = images['soundon']['file'];
-
-	$("#imgsom").append(images['soundon']['img']);
-
-	images['soundoff']['img'] = new Image();
-
-	images['soundoff']['img'].onerror = function()
-	{
-		console.log("error image_load(): não foi possível carregar imagem; ação: ignorar");
-	}
-
-	images['soundoff']['img'].src = images['soundoff']['file'];
-}
 
 function vencedor_pagina()
 {

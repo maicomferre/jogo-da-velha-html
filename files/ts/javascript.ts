@@ -99,7 +99,6 @@ var canvas_posicao_click = [
 
 
 $(document).ready(function(){
-	image_load();
 	canvas = load_canvas();
 	write_game(canvas);
 	canvas_context = canvas;

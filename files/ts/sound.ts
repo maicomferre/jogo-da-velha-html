@@ -84,29 +84,38 @@ class Sound{
 class ControladorSom{
     private sons:Sound[]=[];
 	private sons_name:string[] = [];
+	public estadosom:boolean = true;
 
     constructor(root_dir:string[]){
         root_dir.forEach((value,index)=>{
             this.sons[index] = new Sound(value);
 			this.sons_name[index] = this.sons[index].name;
-			console.log(this.sons_name[index]);
         });
     }
 
-	public iniciar(audio_nome:string,PausarOutros:boolean=true,doinicio:boolean=false):void{
+	public iniciar(audio_nome:string,PausarOutros:boolean=true,desativarLoop=false,doinicio:boolean=false):void{
+		if(!this.estadosom)return;
         let index:number = this.getIdByName(audio_nome);
         if(index == -1){
             console.log(`[class][ControladorSom]iniciar(${audio_nome}): invalid sound name.`);
             return;
         }
 
-		if(PausarOutros)
+		if(desativarLoop)
+		{
+			this.sons[index].disableloop();
+		}
+
+		if(PausarOutros === true){
 			this.pausarTodos();
+			console.log("pauisar todos");
+		}
 
 		this.sons[index].startOnInit();
 	}
 
 	public continuar(audio_nome:string):void{
+		if(!this.estadosom)return;
         let index:number = this.getIdByName(audio_nome);
         if(index == -1){
             console.log(`[class][ControladorSom]continuar(${audio_nome}): invalid sound name.`);
@@ -121,8 +130,9 @@ class ControladorSom{
 	public pausarTodos():void
 	{
 		this.sons.forEach(som => {
-			if(!som.paused && som.started && som.gettime != 0)
+			if(!som.paused && som.started){
 				som.pause();
+			}
 		});
 	}
 
@@ -143,31 +153,19 @@ class ControladorSom{
 				som.resume();
 		});
 	}
+
+	public desativarSom():void
+	{
+		this.estadosom = false;
+		this.pausarTodos();
+	}
+	public ativarSom():void
+	{
+		if(!this.estadosom)
+		{
+			this.estadosom = true;
+			this.continuarTodos();
+		}
+	}
 };
 
-
-var images:string[] =[ 
-	'files/sondoff.png',
-	'files/sondon.png'
-];
-
-var estadosom = true;
-
-class Gestor
-{
-
-}
-
-function alternarsom():void
-{
-	let s = soundoff ? 1 : 0 ;
-	//$("#imgsom").html();
-	//$("#imgsom").html(images[s]);
-
-	//let t = $("#imgsom").append(s['file']);
-
-	if(soundoff)
-		som.pausarTodos();
-	else
-		som.continuarTodos();
-}

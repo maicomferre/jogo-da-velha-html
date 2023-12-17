@@ -71,7 +71,6 @@ var canvas_posicao_click = [
     [297, 217, 391, 320],
 ];
 $(document).ready(function () {
-    image_load();
     canvas = load_canvas();
     write_game(canvas);
     canvas_context = canvas;
