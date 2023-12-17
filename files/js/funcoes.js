@@ -9,7 +9,6 @@ function showerror(msg, time = 4000) {
     setTimeout(function () {
         $("#errormessage").toggle('slow');
         antidouble = false;
-        som.iniciar("error", false, true);
     }, time);
 }
 function voltar_ao_menu() {

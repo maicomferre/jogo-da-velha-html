@@ -32,7 +32,7 @@ class Sound {
         this.sound_element.loop = false;
     }
     pause() {
-        this.sound_element.play();
+        this.sound_element.pause();
         this.paused = true;
     }
     reload() {

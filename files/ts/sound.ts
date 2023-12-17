@@ -46,7 +46,7 @@ class Sound{
 	}
 
     public pause():void{
-        this.sound_element.play();
+        this.sound_element.pause();
         this.paused = true;
     }
     
