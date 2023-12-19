@@ -20,6 +20,7 @@ function resetar(novamente = false) {
     jogador[0]['jogadas'] = 0;
     jogador[1]['jogadas'] = 0;
     if (novamente) {
+        $('#voltar_pagina_finalista').hide();
         som.iniciar("back_sound");
         $('#opt3').hide('slow');
         $('#opt2').show('fast');
@@ -77,6 +78,20 @@ function comecar() {
         som.iniciar('back_sound');
     }, 1000);
     return true;
+}
+function ver_jogo(voltar = false) {
+    if (!voltar) {
+        $('#voltar_pagina_finalista').show();
+        $('#opt3').hide('fast');
+        $('#opt2').show('slow');
+        $('#opt1').hide('fast');
+    }
+    else {
+        $('#voltar_pagina_finalista').hide();
+        $('#opt3').show('slow');
+        $('#opt2').hide('fast');
+        $('#opt1').hide('fast');
+    }
 }
 function vencedor_pagina() {
     som.iniciar('fimjogo', true, true);

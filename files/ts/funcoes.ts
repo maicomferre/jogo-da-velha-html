@@ -22,6 +22,7 @@ function showerror(msg:string,time=4000):void
 
 function resetar(novamente=false):void
 {
+
 	for(let x=0; x<3; x++)
 		for(let y=0; y<3; y++)
 			velha_game[x][y] = ' ';
@@ -35,6 +36,8 @@ function resetar(novamente=false):void
 
 	if(novamente)
 	{
+		//Resetar Para Jogar Novamente
+		$('#voltar_pagina_finalista').hide();
 		som.iniciar("back_sound");
 		$('#opt3').hide('slow');
 		$('#opt2').show('fast');
@@ -120,6 +123,23 @@ function comecar():boolean
 	},1000);
 
 	return true;
+}
+
+function ver_jogo(voltar=false):void
+{
+	if(!voltar){
+		$('#voltar_pagina_finalista').show();
+		$('#opt3').hide('fast');
+		$('#opt2').show('slow');
+		$('#opt1').hide('fast');
+	}
+	else
+	{
+		$('#voltar_pagina_finalista').hide();
+		$('#opt3').show('slow');
+		$('#opt2').hide('fast');
+		$('#opt1').hide('fast');		
+	}
 }
 
 function vencedor_pagina()

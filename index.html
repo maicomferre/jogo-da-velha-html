@@ -50,8 +50,13 @@
             </tr>
             <tr>
                 <td colspan="2"><button class="btn-menu" onClick="voltar_ao_menu()"> Alterar Nomes </button></td>
-                <td colspan="2"><button class="btn-restart" onClick="resetar()">Reiniciar Jogo</button></td>
+                <td colspan="2"><button class="btn-restart" onClick="resetar(true)">Reiniciar Jogo</button></td>
+                <td colspan="2" style="display:none;" id="voltar_pagina_finalista">
+                    <button class="btn-restart" onClick="ver_jogo(true);">Voltar Página Vencedor</button>
+                </td>
+
             </tr>
+
 
         </table>
     </div>
@@ -116,7 +121,7 @@
 
                 <table id="tableoption">
                     <tr><th onClick="resetar('novamente');">Jogar Novamente</th></tr>
-                    <tr><th>Ver Jogo</th></tr>
+                    <tr><th onClick="ver_jogo();">Ver Jogo</th></tr>
                 </table>
             </div> 
         </div>
